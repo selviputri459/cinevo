@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_booking')->unique();
+            $table->string('booking_code')->unique();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('film_id')->constrained('films')->cascadeOnDelete();
-            $table->foreignId('jadwal_tayang_id')->constrained('showtimes')->cascadeOnDelete();
-            $table->integer('jumlah_tiket');
-            $table->decimal('total_harga', 10, 2);
-            $table->string('status_booking');
+            $table->foreignId('showtime_id')->constrained('showtimes')->cascadeOnDelete();
+            $table->integer('ticket_quantity');
+            $table->decimal('total_price', 10, 2);
+            $table->string('status');
             $table->timestamps();
         });
     }

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('studios', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->integer('kapasitas');
+            $table->string('name');
+            $table->integer('capacity');
             $table->timestamps();
         });
     }

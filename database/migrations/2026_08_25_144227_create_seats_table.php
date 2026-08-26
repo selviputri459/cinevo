@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('seats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('studio_id')->constrained('studios')->cascadeOnDelete();
-            $table->string('nama_kursi');
+            $table->string('seat_name');
             $table->timestamps();
         });
     }

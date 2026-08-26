@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('film_id')->constrained('films')->cascadeOnDelete();
             $table->foreignId('studio_id')->constrained('studios')->cascadeOnDelete();
-            $table->date('tanggal');
-            $table->time('jam');
-            $table->decimal('harga', 10, 2);
+            $table->date('date');
+            $table->time('time');
+            $table->decimal('price', 10, 2);
             $table->timestamps();
         });
     }
