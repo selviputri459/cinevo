@@ -14,12 +14,12 @@ class BookingDetail extends Model
         'seat_id'
     ];
 
-    public function seats()
+    public function seat()
     {
         return $this->belongsTo(Seat::class);
     }
 
-    public function bookings()
+    public function booking()
     {
         return $this->belongsTo(Booking::class);
     }

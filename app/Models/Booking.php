@@ -19,12 +19,12 @@ class Booking extends Model
         'status'
     ];
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function showtimes()
+    public function showtime()
     {
         return $this->belongsTo(Showtime::class);
     }

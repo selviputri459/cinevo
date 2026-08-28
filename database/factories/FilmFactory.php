@@ -19,7 +19,7 @@ class FilmFactory extends Factory
     {
         return [
             'title' => fake()->sentence(3),
-            'poster' => null,
+            'poster' => 'default-poster.jpg',
             'genre' => fake()->randomElement([
                 'Action',
                 'Comedy',
