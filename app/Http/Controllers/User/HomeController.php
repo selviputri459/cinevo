@@ -15,8 +15,7 @@ class HomeController extends Controller
         // Film yang punya jadwal tayang (hari ini/ke depan) => sudah bisa dibooking
         $sedangTayang = Film::whereHas('showtimes', function ($query) use ($today) {
                 $query->where('date', '>=', $today);
-            })
-            ->with(['showtimes' => function ($query) use ($today) {
+            })->with(['showtimes' => function ($query) use ($today) {
                 $query->where('date', '>=', $today)->orderBy('price');
             }])->latest()->get();
 

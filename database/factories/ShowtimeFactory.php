@@ -22,7 +22,7 @@ class ShowtimeFactory extends Factory
         return [ 
             'film_id' => Film::inRandomOrder()->value('id'), 
             'studio_id' => Studio::inRandomOrder()->value('id'), 
-            'date' => fake()->date(), 
+            'date' => now()->addDays(rand(0, 6))->toDateString(), 
             'time'=> fake()->randomElement([ 
                 '10:00', 
                 '13:00', 

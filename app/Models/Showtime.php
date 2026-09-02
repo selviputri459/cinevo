@@ -17,12 +17,12 @@ class Showtime extends Model
         'price'
     ];
 
-    public function films()
+    public function film()
     {
         return $this->belongsTo(Film::class);
     }
 
-    public function studios()
+    public function studio()
     {
         return $this->belongsTo(Studio::class);
     }

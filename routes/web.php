@@ -23,3 +23,4 @@ Route::group(['middleware' => 'auth'], function() {
 });
 
 Route::get('/film/{film}', [App\Http\Controllers\User\FilmController::class, 'show'])->name('film.show');
+Route::get('/film/{film}/jadwal', [App\Http\Controllers\User\FilmController::class, 'jadwal'])->name('film.jadwal');

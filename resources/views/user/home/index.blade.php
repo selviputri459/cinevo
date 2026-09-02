@@ -34,7 +34,7 @@
                         @if ($film->showtimes->isNotEmpty())
                             <p class="mb-2 fw-semibold">Rp{{ number_format($film->showtimes->first()->price, 0, ',', '.') }}</p>
                         @endif
-                        <a href="{{ route('user.film.show', $film->id) }}" class="btn btn-outline-danger btn-sm w-100">Lihat Detail</a>
+                        <a href="{{ route('film.show', $film->id) }}" class="btn btn-outline-danger btn-sm w-100">Lihat Detail</a>
                     </div>
                 </div>
             </div>
