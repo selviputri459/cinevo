@@ -1,14 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\User\Auth\LoginController;
-use App\Http\Controllers\User\Auth\RegisterController;
-use App\Http\Controllers\User\ProfileController;
-use App\Http\Controllers\User\HomeController;
-use App\Http\Controllers\User\FilmController;
 
-
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\User\HomeController::class, 'index'])->name('home');
 
 Route::get('/login', [App\Http\Controllers\User\Auth\LoginController::class, 'create'])->name('login');
 Route::post('/login', [App\Http\Controllers\User\Auth\LoginController::class, 'store'])->name('login.store');
@@ -24,3 +18,5 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::get('/film/{film}', [App\Http\Controllers\User\FilmController::class, 'show'])->name('film.show');
 Route::get('/film/{film}/jadwal', [App\Http\Controllers\User\FilmController::class, 'jadwal'])->name('film.jadwal');
+
+Route::get('/showtime/{showtime}/seats', [App\Http\Controllers\User\SeatController::class, 'index'])->middleware('auth')->name('seats.index');

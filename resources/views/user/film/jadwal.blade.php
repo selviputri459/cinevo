@@ -30,7 +30,7 @@
     </div>
 
     {{-- Form pilih jam --}}
-    <form action="" method="GET">
+    <form action="" method="GET" id="pilihJadwalForm">
         @if ($showtimesByStudio->isEmpty())
             <p class="text-muted">Tidak ada jadwal tayang di tanggal ini.</p>
         @endif
@@ -66,3 +66,22 @@
 
 </div>
 @endsection
+
+@push('scripts')
+<script>
+document.getElementById('pilihJadwalForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const checked = this.querySelector('input[name="showtime_id"]:checked');
+    if (!checked) {
+        this.reportValidity();
+        return;
+    }
+
+    // route() di-generate dari Laravel dengan ID dummy, terus di JS diganti
+    // pakai showtime_id yang dipilih user
+    const urlTemplate = @json(route('seats.index', ['showtime' => 'SHOWTIME_ID']));
+    window.location.href = urlTemplate.replace('SHOWTIME_ID', checked.value);
+});
+</script>
+@endpush
