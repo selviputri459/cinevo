@@ -14,6 +14,11 @@ Route::post('/register', [App\Http\Controllers\User\Auth\RegisterController::cla
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/profile', [App\Http\Controllers\User\ProfileController::class, 'index'])->name('profile');
     Route::post('/profile', [App\Http\Controllers\User\ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/booking/create', [App\Http\Controllers\User\BookingController::class, 'create'])->name('booking.create');
+    Route::get('/riwayat-booking', [App\Http\Controllers\User\BookingController::class, 'index'])->name('booking.index');
+    Route::post('/booking', [App\Http\Controllers\User\BookingController::class, 'store'])->name('booking.store');
+    Route::get('/booking/{booking}', [App\Http\Controllers\User\BookingController::class, 'show'])->name('booking.show');
+    Route::patch('/booking/{booking}/cancel', [App\Http\Controllers\User\BookingController::class, 'cancel'])->name('booking.cancel');
 });
 
 Route::get('/film/{film}', [App\Http\Controllers\User\FilmController::class, 'show'])->name('film.show');

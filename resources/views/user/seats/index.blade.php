@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.user')
 
 @section('title', 'Pilih Kursi')
 
@@ -66,7 +66,7 @@
 
     .screen-wrap{ text-align:center; margin-bottom: 26px; }
     .screen-arc{
-        width: min(560px, 90%);
+        width: min(580px, 90%);
         height: 14px;
         margin: 0 auto 10px;
         border-radius: 0 0 60px 60px / 0 0 40px 40px;
@@ -281,8 +281,7 @@
                 <span id="totalHarga">Rp 0</span>
             </div>
 
-            <form id="kursiForm" action="{{ route('user.booking.store') }}" method="POST">
-                @csrf
+            <form id="kursiForm" action="{{ route('booking.create') }}" method="GET">
                 <input type="hidden" name="showtime_id" value="{{ $showtime->id }}">
                 <div id="hiddenKursiInputs"></div>
                 <button type="submit" id="btnLanjut" class="btn-lanjut" disabled>Lanjutkan</button>
