@@ -25,3 +25,15 @@ Route::get('/film/{film}', [App\Http\Controllers\User\FilmController::class, 'sh
 Route::get('/film/{film}/jadwal', [App\Http\Controllers\User\FilmController::class, 'jadwal'])->name('film.jadwal');
 
 Route::get('/showtime/{showtime}/seats', [App\Http\Controllers\User\SeatController::class, 'index'])->middleware('auth')->name('seats.index');
+
+Route::prefix('admin')->name('admin.')->group(function () {
+ 
+    Route::get('/login', [App\Http\Controllers\Admin\Auth\LoginController::class, 'create'])->name('login');
+    Route::post('/login', [App\Http\Controllers\Admin\Auth\LoginController::class, 'store'])->name('login.store');
+ 
+    Route::middleware('auth:admin')->group(function () {
+        Route::post('/logout', [App\Http\Controllers\Admin\Auth\LoginController::class, 'destroy'])->name('logout');
+        Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    });
+ 
+});
