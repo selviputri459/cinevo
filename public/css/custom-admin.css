@@ -1,0 +1,73 @@
+
+  /* 1. TEMA WARNA PINK
+   Ganti nilai variable ini kalau mau sesuaikan shade pink-nya */
+   
+:root {
+    --cinevo-pink: #e83e8c;
+    --cinevo-pink-dark: #c2185b;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(180deg, var(--cinevo-pink) 10%, var(--cinevo-pink-dark) 100%) !important;
+}
+
+.text-primary {
+    color: var(--cinevo-pink) !important;
+}
+
+.btn-primary {
+    background-color: var(--cinevo-pink) !important;
+    border-color: var(--cinevo-pink) !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: var(--cinevo-pink-dark) !important;
+    border-color: var(--cinevo-pink-dark) !important;
+}
+
+.border-left-primary {
+    border-left: 0.25rem solid var(--cinevo-pink) !important;
+}
+
+.sidebar-dark .nav-item .nav-link {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.sidebar-dark .nav-item.active .nav-link,
+.sidebar-dark .nav-item .nav-link:hover {
+    color: #fff;
+}
+
+
+/* 2. SIDEBAR FIXED (cuma isinya yang scroll, bukan sidebarnya) */
+#accordionSidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 1039;
+}
+
+/* Geser konten ke kanan sejauh lebar sidebar, biar nggak ketiban */
+#content-wrapper {
+    margin-left: 14rem;
+}
+
+/* Saat sidebar di-toggle jadi mode kecil (ikon aja) */
+#accordionSidebar.toggled {
+    width: 6.5rem !important;
+}
+
+body.sidebar-toggled #content-wrapper {
+    margin-left: 6.5rem;
+}
+
+
+/* 3. NAVBAR (TOPBAR) TETAP DI ATAS SAAT SCROLL */
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+}

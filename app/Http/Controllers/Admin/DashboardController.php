@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Film;
@@ -17,7 +16,7 @@ class DashboardController extends Controller
         $totalStudio = Studio::count();
         $totalBooking = Booking::count();
 
-        $bookingTerbaru = Booking::with(['film', 'showtime.studio'])
+        $bookingTerbaru = Booking::with(['showtime.film', 'showtime.studio'])
             ->latest()
             ->take(5)
             ->get();

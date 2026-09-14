@@ -92,13 +92,13 @@
         <div class="card-body">
             @forelse ($bookingTerbaru as $booking)
                 <div class="d-flex align-items-center {{ !$loop->last ? 'border-bottom pb-3 mb-3' : '' }}">
-                    <img src="{{ $booking->film->poster ? asset('storage/' . $booking->film->poster) : asset('img/no-image.png') }}"
-                         alt="{{ $booking->film->title }}"
+                    <img src="{{ $booking->showtime->film->poster ? asset('storage/' . $booking->showtime->film->poster) : asset('img/no-image.png') }}"
+                         alt="{{ $booking->showtime->film->title }}"
                          class="rounded"
                          style="width: 60px; height: 80px; object-fit: cover;">
 
                     <div class="ml-3">
-                        <div class="font-weight-bold">{{ $booking->film->title }}</div>
+                        <div class="font-weight-bold">{{ $booking->showtime->film->title }}</div>
                         <div class="text-muted small">
                             {{ $booking->showtime->studio->name }} -
                             {{ \Carbon\Carbon::parse($booking->showtime->date)->translatedFormat('d M Y') }}
