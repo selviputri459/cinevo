@@ -5,8 +5,8 @@
 @push('styles')
 <style>
     .booking-page{
-        background: radial-gradient(circle at 50% -10%, #7A1B4F 0%, #35081F 60%);
-        color: #FBEFF4;
+        background: radial-gradient(circle at 50% -10%, var(--cinevo-bg-start) 0%, var(--cinevo-bg-end) 60%);
+        color: var(--cinevo-text);
         border-radius: 18px;
         padding: 32px 24px 40px;
         font-family: 'Inter', sans-serif;
@@ -24,8 +24,8 @@
         align-items:flex-start;
     }
     .booking-card{
-        background: #4F1236;
-        border: 1px solid rgba(255,255,255,.12);
+        background: var(--cinevo-panel);
+        border: 1px solid var(--cinevo-border);
         border-radius: 16px;
         padding: 24px;
         width: 360px;
@@ -43,7 +43,7 @@
         font-size:.75rem;
         text-transform: uppercase;
         letter-spacing:.05em;
-        color:#D79BB8;
+        color: var(--cinevo-muted);
         margin-top: 14px;
     }
     .booking-card dt:first-of-type{ margin-top:0; }
@@ -52,8 +52,8 @@
         font-weight:600;
     }
     .booking-form{
-        background: #4F1236;
-        border: 1px solid rgba(255,255,255,.12);
+        background: var(--cinevo-panel);
+        border: 1px solid var(--cinevo-border);
         border-radius: 16px;
         padding: 24px;
         width: 360px;
@@ -66,7 +66,7 @@
     .booking-form label{
         display:block;
         font-size:.8rem;
-        color:#D79BB8;
+        color: var(--cinevo-muted);
         margin-bottom: 4px;
     }
     .booking-form .field{ margin-bottom: 16px; }
@@ -74,17 +74,17 @@
         width:100%;
         padding: 9px 12px;
         border-radius: 8px;
-        border: 1px solid rgba(255,255,255,.15);
+        border: 1px solid var(--cinevo-border);
         background: rgba(255,255,255,.06);
-        color: #FBEFF4;
+        color: var(--cinevo-text);
     }
     .btn-booking{
         width:100%;
         padding: 11px;
         border-radius: 9px;
         border: none;
-        background: #F2A6C6;
-        color: #3B0A28;
+        background: var(--cinevo-accent);
+        color: var(--cinevo-accent-dark);
         font-weight:600;
         cursor:pointer;
         margin-top: 6px;

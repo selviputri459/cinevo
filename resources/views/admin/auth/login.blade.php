@@ -51,7 +51,7 @@
                                         <label class="custom-control-label" for="remember">Ingat saya</label>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-warning btn-user btn-block">
+                                <button type="submit" class="btn btn-danger btn-user btn-block">
                                     Login
                                 </button>
                             </form>

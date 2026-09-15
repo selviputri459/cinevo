@@ -48,7 +48,7 @@
                                                 <label class="custom-control-label" for="remember">Remember Me</label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-warning btn-user btn-block">
+                                        <button type="submit" class="btn btn-danger btn-user btn-block">
                                             <span class="fa fa-sign-in-all"></span>
                                             Login
                                         </button>

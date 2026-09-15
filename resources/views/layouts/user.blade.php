@@ -12,8 +12,29 @@
         rel="stylesheet">
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
 
+    {{-- Palet warna Cinevo (ungu + merah muda) — dipakai bareng di semua halaman.
+         Ubah di sini aja kalau mau ganti warna, semua halaman ikut berubah. --}}
+    <style>
+        :root{
+            --cinevo-bg-start: #7A1B4F;
+            --cinevo-bg-end: #35081F;
+            --cinevo-panel: #4F1236;
+            --cinevo-panel-hover: #5C1541;
+            --cinevo-border: rgba(255,255,255,.12);
+            --cinevo-text: #FBEFF4;
+            --cinevo-muted: #D79BB8;
+            --cinevo-accent: #F2A6C6;
+            --cinevo-accent-soft: rgba(242,166,198,.18);
+            --cinevo-accent-dark: #3B0A28;
+            --cinevo-booked: #7A3E5C;
+        }
+    </style>
+
     @stack('styles')
 </head>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <body class="bg-light">
 
     <!-- Topbar -->
@@ -60,8 +81,8 @@
                                 {{ Auth::user()->name }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                
                                 <li><a class="dropdown-item" href="{{ route('profile') }}">Ubah Profil</a></li>
+                                <li><a class="dropdown-item" href="{{ route('booking.index') }}">Riwayat Booking</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li>
                                     <form action="{{ route('logout') }}" method="POST">
@@ -70,7 +91,7 @@
                                     </form>
                                 </li>
                             </ul>
-                        </ul>
+                        </li>
                     @endguest
                 </ul>
             </div>

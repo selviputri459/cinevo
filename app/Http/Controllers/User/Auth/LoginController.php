@@ -22,8 +22,8 @@ class LoginController extends Controller
 
         if (Auth::guard('web')->attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended(route('home'));
-        }   
+            return redirect()->intended(route('home'))->with('success', 'Login berhasil! Selamat datang kembali, ' . Auth::user()->name . '.');
+        }
         return back()->withErrors([
                 'email' => 'Email atau password salah.',
             ])->onlyInput('email');

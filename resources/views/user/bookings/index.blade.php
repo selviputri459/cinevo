@@ -5,8 +5,8 @@
 @push('styles')
 <style>
     .riwayat-page{
-        background: radial-gradient(circle at 50% -10%, #7A1B4F 0%, #35081F 60%);
-        color: #FBEFF4;
+        background: radial-gradient(circle at 50% -10%, var(--cinevo-bg-start) 0%, var(--cinevo-bg-end) 60%);
+        color: var(--cinevo-text);
         border-radius: 18px;
         padding: 32px 24px 40px;
         font-family: 'Inter', sans-serif;
@@ -22,16 +22,16 @@
     .riwayat-tabs a{
         padding: 7px 18px;
         border-radius: 999px;
-        border: 1px solid rgba(255,255,255,.18);
-        color: #D79BB8;
+        border: 1px solid var(--cinevo-border);
+        color: var(--cinevo-muted);
         text-decoration:none;
         font-size:.88rem;
         font-weight:500;
     }
     .riwayat-tabs a.active{
-        background: #F2A6C6;
-        border-color: #F2A6C6;
-        color: #3B0A28;
+        background: var(--cinevo-accent);
+        border-color: var(--cinevo-accent);
+        color: var(--cinevo-accent-dark);
         font-weight:600;
     }
 
@@ -40,14 +40,14 @@
         display:flex;
         gap: 16px;
         align-items:center;
-        background: #4F1236;
-        border: 1px solid rgba(255,255,255,.12);
+        background: var(--cinevo-panel);
+        border: 1px solid var(--cinevo-border);
         border-radius: 14px;
         padding: 16px;
         text-decoration:none;
-        color: #FBEFF4;
+        color: var(--cinevo-text);
     }
-    .riwayat-card:hover{ background: #5C1541; }
+    .riwayat-card:hover{ background: var(--cinevo-panel-hover); }
     .riwayat-card img{
         width: 64px;
         height: 88px;
@@ -57,7 +57,7 @@
     }
     .riwayat-card .info{ flex:1; min-width:0; }
     .riwayat-card .info h3{ font-size:1rem; font-weight:600; margin: 0 0 4px; }
-    .riwayat-card .info p{ margin: 0; font-size:.82rem; color:#D79BB8; }
+    .riwayat-card .info p{ margin: 0; font-size:.82rem; color: var(--cinevo-muted); }
     .riwayat-card .side{ text-align:right; flex-shrink:0; }
     .riwayat-card .side .total{ font-weight:600; margin-bottom: 6px; }
 
@@ -68,11 +68,11 @@
         font-size:.75rem;
         font-weight:600;
     }
-    .status-pill.menunggu{ background: rgba(242,166,198,.18); color:#F2A6C6; }
+    .status-pill.menunggu{ background: var(--cinevo-accent-soft); color: var(--cinevo-accent); }
     .status-pill.lunas{ background: rgba(120,220,150,.18); color:#7EDD9C; }
-    .status-pill.batal{ background: rgba(255,255,255,.12); color:#D79BB8; }
+    .status-pill.batal{ background: var(--cinevo-border); color: var(--cinevo-muted); }
 
-    .riwayat-empty{ color:#D79BB8; text-align:center; padding: 40px 0; }
+    .riwayat-empty{ color: var(--cinevo-muted); text-align:center; padding: 40px 0; }
 </style>
 @endpush
 
