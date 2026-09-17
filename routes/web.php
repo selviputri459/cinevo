@@ -38,6 +38,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/data-admin/create', [App\Http\Controllers\Admin\AdminController::class, 'create'])->name('data-admin.create');
     Route::post('/data-admin', [App\Http\Controllers\Admin\AdminController::class, 'store'])->name('data-admin.store');
     Route::delete('/data-admin/{admin}', [App\Http\Controllers\Admin\AdminController::class, 'destroy'])->name('data-admin.destroy');
+    Route::resource('film', App\Http\Controllers\Admin\FilmController::class);
 });
  
 });
