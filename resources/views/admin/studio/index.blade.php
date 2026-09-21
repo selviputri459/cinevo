@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('title', 'Kelola Film')
+@section('title', 'Kelola Studio')
 
 @section('content')
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Kelola Film</h1>
-        <a href="{{ route('admin.film.create') }}" class="btn btn-danger">
-            <i class="fas fa-plus fa-sm"></i> Tambah Film
+        <h1 class="h3 mb-0 text-gray-800">Kelola Studio</h1>
+        <a href="{{ route('admin.studio.create') }}" class="btn btn-danger">
+            <i class="fas fa-plus fa-sm"></i> Tambah Studio
         </a>
     </div>
 
@@ -17,36 +17,27 @@
                     <thead>
                         <tr>
                             <th style="width: 60px;">No</th>
-                            <th style="width: 100px;">Poster</th>
-                            <th>Judul</th>
-                            <th>Genre</th>
-                            <th>Durasi</th>
-                            <th>Sinopsis</th>
+                            <th>Name</th>
+                            <th>Capacity</th>
                             <th style="width: 140px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($films as $film)
+                        @forelse ($studios as $studio)
                             <tr>
-                                <td>{{ $films->firstItem() + $loop->index }}</td>
+                                <td>{{ $studios->firstItem() + $loop->index }}</td>
+                                <td>{{ $studio->name }}</td>
+                                <td>{{ $studio->capacity }}</td>
                                 <td>
-                                    <img src="{{ asset('storage/' . $film->poster) }}" alt="{{ $film->title }}"
-                                        style="width: 60px; height: 90px; object-fit: cover;" class="rounded">
-                                </td>
-                                <td>{{ $film->title }}</td>
-                                <td>{{ $film->genre }}</td>
-                                <td>{{ $film->duration }} menit</td>
-                                <td>{{ Str::limit($film->synopsis, 80) }}</td>
-                                <td>
-                                    <a href="{{ route('admin.film.show', $film) }}" class="btn btn-info btn-sm"
+                                    <a href="{{ route('admin.studio.show', $studio) }}" class="btn btn-info btn-sm"
                                         title="Detail">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('admin.film.edit', $film) }}" class="btn btn-warning btn-sm"
+                                    <a href="{{ route('admin.studio.edit', $studio) }}" class="btn btn-warning btn-sm"
                                         title="Ubah">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('admin.film.destroy', $film) }}" method="POST"
+                                    <form action="{{ route('admin.studio.destroy', $studio) }}" method="POST"
                                         class="d-inline form-delete-film">
                                         @csrf
                                         @method('DELETE')
@@ -58,7 +49,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center">Belum ada data film.</td>
+                                <td colspan="7" class="text-center">Belum ada data studio.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -66,7 +57,7 @@
             </div>
 
             <div class="d-flex justify-content-end mt-3">
-                {{ $films->links() }}
+                {{ $studios->links() }}
             </div>
         </div>
     </div>

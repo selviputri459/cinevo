@@ -39,6 +39,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('/data-admin', [App\Http\Controllers\Admin\AdminController::class, 'store'])->name('data-admin.store');
     Route::delete('/data-admin/{admin}', [App\Http\Controllers\Admin\AdminController::class, 'destroy'])->name('data-admin.destroy');
     Route::resource('film', App\Http\Controllers\Admin\FilmController::class);
+    Route::resource('studio', App\Http\Controllers\Admin\StudioController::class);
+    Route::resource('showtime', App\Http\Controllers\Admin\ShowtimeController::class);
+    Route::resource('booking', \App\Http\Controllers\Admin\BookingController::class)->only(['index', 'show']);
+    Route::patch('booking/{booking}/lunas', [\App\Http\Controllers\Admin\BookingController::class, 'markAsLunas'])->name('booking.lunas');
+    Route::patch('booking/{booking}/batalkan', [\App\Http\Controllers\Admin\BookingController::class, 'cancel'])->name('booking.cancel');
 });
  
 });

@@ -22,8 +22,8 @@
         </a>
     </li>
 
-    <li class="nav-item {{ request()->routeIs('admin.jadwal.*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ Route::has('admin.jadwal.index') ? route('admin.jadwal.index') : '#' }}">
+    <li class="nav-item {{ request()->routeIs('admin.showtime.*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ Route::has('admin.showtime.index') ? route('admin.showtime.index') : '#' }}">
             <i class="fas fa-fw fa-calendar-alt"></i>
             <span>Jadwal Tayang</span>
         </a>

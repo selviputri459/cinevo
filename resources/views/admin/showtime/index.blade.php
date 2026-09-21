@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
-@section('title', 'Kelola Film')
+@section('title', 'Kelola Jadwal Tayang')
 
 @section('content')
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Kelola Film</h1>
-        <a href="{{ route('admin.film.create') }}" class="btn btn-danger">
-            <i class="fas fa-plus fa-sm"></i> Tambah Film
+        <h1 class="h3 mb-0 text-gray-800">Kelola Jadwal Tayang</h1>
+        <a href="{{ route('admin.showtime.create') }}" class="btn btn-danger">
+            <i class="fas fa-plus fa-sm"></i> Tambah Jadwal Tayang
         </a>
     </div>
 
@@ -17,37 +17,34 @@
                     <thead>
                         <tr>
                             <th style="width: 60px;">No</th>
-                            <th style="width: 100px;">Poster</th>
-                            <th>Judul</th>
-                            <th>Genre</th>
-                            <th>Durasi</th>
-                            <th>Sinopsis</th>
+                            <th>Film</th>
+                            <th>Studio</th>
+                            <th>Tanggal</th>
+                            <th>Jam</th>
+                            <th>Harga</th>
                             <th style="width: 140px;">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($films as $film)
+                        @forelse ($showtimes as $showtime)
                             <tr>
-                                <td>{{ $films->firstItem() + $loop->index }}</td>
+                                <td>{{ $showtimes->firstItem() + $loop->index }}</td>
+                                <td>{{ $showtime->film->title }}</td>
+                                <td>{{ $showtime->studio->name }}</td>
+                                <td>{{ \Carbon\Carbon::parse($showtime->date)->format('d-m-Y') }}</td>
+                                <td>{{ \Carbon\Carbon::parse($showtime->time)->format('H:i') }}</td>
+                                <td>Rp{{ number_format($showtime->price, 0, ',', '.') }}</td>
                                 <td>
-                                    <img src="{{ asset('storage/' . $film->poster) }}" alt="{{ $film->title }}"
-                                        style="width: 60px; height: 90px; object-fit: cover;" class="rounded">
-                                </td>
-                                <td>{{ $film->title }}</td>
-                                <td>{{ $film->genre }}</td>
-                                <td>{{ $film->duration }} menit</td>
-                                <td>{{ Str::limit($film->synopsis, 80) }}</td>
-                                <td>
-                                    <a href="{{ route('admin.film.show', $film) }}" class="btn btn-info btn-sm"
+                                    <a href="{{ route('admin.showtime.show', $showtime) }}" class="btn btn-info btn-sm"
                                         title="Detail">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="{{ route('admin.film.edit', $film) }}" class="btn btn-warning btn-sm"
+                                    <a href="{{ route('admin.showtime.edit', $showtime) }}" class="btn btn-warning btn-sm"
                                         title="Ubah">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('admin.film.destroy', $film) }}" method="POST"
-                                        class="d-inline form-delete-film">
+                                    <form action="{{ route('admin.showtime.destroy', $showtime) }}" method="POST"
+                                        class="d-inline form-delete-showtime">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm" title="Hapus">
@@ -58,7 +55,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center">Belum ada data film.</td>
+                                <td colspan="7" class="text-center">Belum ada jadwal tayang.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -66,7 +63,7 @@
             </div>
 
             <div class="d-flex justify-content-end mt-3">
-                {{ $films->links() }}
+                {{ $showtimes->links() }}
             </div>
         </div>
     </div>

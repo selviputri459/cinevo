@@ -12,13 +12,7 @@ class FilmController extends Controller
     public function index()
     {
         $films = Film::latest()->paginate(10);
-
         return view('admin.film.index', compact('films'));
-    }
-
-    public function show(Film $film)
-    {
-        return view('admin.film.show', compact('film'));
     }
 
     public function create()
@@ -37,10 +31,13 @@ class FilmController extends Controller
         ]);
 
         $validated['poster'] = $request->file('poster')->store('posters', 'public');
-
         Film::create($validated);
-
         return redirect()->route('admin.film.index') ->with('success', 'Film berhasil ditambahkan.');
+    }
+
+    public function show(Film $film)
+    {
+        return view('admin.film.show', compact('film'));
     }
 
     public function edit(Film $film)
@@ -66,7 +63,6 @@ class FilmController extends Controller
         }
 
         $film->update($validated);
-
         return redirect()->route('admin.film.index')->with('success', 'Film berhasil diperbarui.');
     }
 
@@ -77,7 +73,6 @@ class FilmController extends Controller
         }
 
         $film->delete();
-
         return redirect()->route('admin.film.index')->with('success', 'Film berhasil dihapus.');
     }
 }

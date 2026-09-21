@@ -24,6 +24,11 @@ class Booking extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function film()
+    {
+        return $this->belongsTo(Film::class);
+    }
+
     public function showtime()
     {
         return $this->belongsTo(Showtime::class);
