@@ -12,7 +12,7 @@
                 style="width:80px; height:110px; object-fit:cover;" class="rounded" alt="{{ $film->title }}">
             <div>
                 <h5 class="fw-bold mb-1">{{ $film->title }}</h5>
-                <p class="mb-0 text-muted">{{ $film->genre }} · {{ $film->duration }} menit</p>
+                <p class="mb-0 cinevo-muted">{{ $film->genre }} · {{ $film->duration }} menit</p>
             </div>
         </div>
     </div>
@@ -44,7 +44,7 @@
                             @foreach ($showtimes as $showtime)
                                 <input type="radio" class="btn-check" name="showtime_id"
                                     id="showtime{{ $showtime->id }}" value="{{ $showtime->id }}" required>
-                                <label class="btn btn-outline-secondary" for="showtime{{ $showtime->id }}">
+                                <label class="btn cinevo-time-btn" for="showtime{{ $showtime->id }}">
                                     {{ \Carbon\Carbon::parse($showtime->time)->format('H:i') }}
                                 </label>
                             @endforeach

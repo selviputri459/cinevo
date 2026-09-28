@@ -4,92 +4,123 @@
 
 @push('styles')
 <style>
-    .booking-page{
-        background: radial-gradient(circle at 50% -10%, var(--cinevo-bg-start) 0%, var(--cinevo-bg-end) 60%);
+    .booking-page {
+        background: radial-gradient(circle at 50% -10%, rgba(232, 161, 196, 0.12) 0%, var(--cinevo-bg) 60%);
         color: var(--cinevo-text);
         border-radius: 18px;
         padding: 32px 24px 40px;
         font-family: 'Inter', sans-serif;
     }
-    .booking-page h1{
-        text-align:center;
-        font-weight:600;
+
+    .booking-page h1 {
+        text-align: center;
+        font-weight: 600;
         margin-bottom: 28px;
+        color: var(--cinevo-text);
     }
-    .booking-layout{
-        display:flex;
+
+    .booking-layout {
+        display: flex;
         gap: 28px;
         flex-wrap: wrap;
-        justify-content:center;
-        align-items:flex-start;
+        justify-content: center;
+        align-items: flex-start;
     }
-    .booking-card{
+
+    .booking-card {
         background: var(--cinevo-panel);
         border: 1px solid var(--cinevo-border);
         border-radius: 16px;
         padding: 24px;
         width: 360px;
     }
-    .booking-card img{
+
+    .booking-card img {
         width: 100%;
         max-width: 160px;
+        height: 235px;
         border-radius: 10px;
-        display:block;
+        display: block;
         margin: 0 auto 16px;
         object-fit: cover;
     }
-    .booking-card dl{ margin:0; }
-    .booking-card dt{
-        font-size:.75rem;
+
+    .booking-card dl {
+        margin: 0;
+    }
+
+    .booking-card dt {
+        font-size: .75rem;
         text-transform: uppercase;
-        letter-spacing:.05em;
+        letter-spacing: .05em;
         color: var(--cinevo-muted);
         margin-top: 14px;
     }
-    .booking-card dt:first-of-type{ margin-top:0; }
-    .booking-card dd{
-        margin: 2px 0 0;
-        font-weight:600;
+
+    .booking-card dt:first-of-type {
+        margin-top: 0;
     }
-    .booking-form{
+
+    .booking-card dd {
+        margin: 2px 0 0;
+        font-weight: 600;
+        color: var(--cinevo-text);
+    }
+
+    .booking-form {
         background: var(--cinevo-panel);
         border: 1px solid var(--cinevo-border);
         border-radius: 16px;
         padding: 24px;
         width: 360px;
     }
-    .booking-form h3{
-        font-size:1.05rem;
-        font-weight:600;
+
+    .booking-form h3 {
+        font-size: 1.05rem;
+        font-weight: 600;
         margin: 0 0 16px;
+        color: var(--cinevo-text);
     }
-    .booking-form label{
-        display:block;
-        font-size:.8rem;
+
+    .booking-form label {
+        display: block;
+        font-size: .8rem;
         color: var(--cinevo-muted);
         margin-bottom: 4px;
     }
-    .booking-form .field{ margin-bottom: 16px; }
-    .booking-form input[readonly]{
-        width:100%;
+
+    .booking-form .field {
+        margin-bottom: 16px;
+    }
+
+    .booking-form input[readonly] {
+        width: 100%;
         padding: 9px 12px;
         border-radius: 8px;
         border: 1px solid var(--cinevo-border);
-        background: rgba(255,255,255,.06);
+        background: rgba(255, 255, 255, .06);
         color: var(--cinevo-text);
+        outline: none;
     }
-    .btn-booking{
-        width:100%;
+
+    .btn-booking {
+        width: 100%;
         padding: 11px;
         border-radius: 9px;
-        border: none;
-        background: var(--cinevo-accent);
-        color: var(--cinevo-accent-dark);
-        font-weight:600;
-        cursor:pointer;
+        border: 1px solid var(--cinevo-pink);
+        background: var(--cinevo-pink);
+        color: var(--cinevo-bg-dark);
+        font-weight: 700;
+        cursor: pointer;
         margin-top: 6px;
+        transition: .2s ease;
     }
-    .btn-booking:hover{ opacity:.92; }
+
+    .btn-booking:hover {
+        background: var(--cinevo-pink-light);
+        border-color: var(--cinevo-pink-light);
+        color: var(--cinevo-bg-dark);
+    }
 </style>
 @endpush
 

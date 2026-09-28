@@ -34,6 +34,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('auth:admin')->group(function () {
     Route::post('/logout', [App\Http\Controllers\Admin\Auth\LoginController::class, 'destroy'])->name('logout');
     Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'index'])->name('profile');
+    Route::post('/profile', [App\Http\Controllers\Admin\ProfileController::class, 'update'])->name('profile.update');
     Route::get('/data-admin', [App\Http\Controllers\Admin\AdminController::class, 'index'])->name('data-admin.index');
     Route::get('/data-admin/create', [App\Http\Controllers\Admin\AdminController::class, 'create'])->name('data-admin.create');
     Route::post('/data-admin', [App\Http\Controllers\Admin\AdminController::class, 'store'])->name('data-admin.store');

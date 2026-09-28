@@ -5,111 +5,179 @@
 @push('styles')
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
-    .kursi-page{
-        background: radial-gradient(circle at 50% -10%, var(--cinevo-bg-start) 0%, var(--cinevo-bg-end) 60%);
+    .kursi-page {
+        background: radial-gradient(circle at 50% -10%, rgba(232, 161, 196, 0.12) 0%, var(--cinevo-bg) 60%);
         color: var(--cinevo-text);
         font-family: 'Inter', sans-serif;
         border-radius: 18px;
         padding: 32px 24px 40px;
     }
 
-    .kursi-header{
-        text-align:center;
+    .kursi-header {
+        text-align: center;
         margin-bottom: 28px;
     }
-    .kursi-header h1{
-        font-family:'Fraunces', serif;
-        font-weight:600;
+
+    .kursi-header h1 {
+        font-family: 'Fraunces', serif;
+        font-weight: 600;
         font-size: 1.6rem;
         margin: 0 0 6px;
+        color: var(--cinevo-pink-light);
     }
-    .kursi-header__meta{
+
+    .kursi-header__meta {
         color: var(--cinevo-muted);
         font-size: .92rem;
     }
-    .kursi-header__meta .dot{ margin: 0 8px; opacity:.5; }
 
-    .kursi-legend{
-        display:flex;
-        justify-content:center;
+    .kursi-header__meta .dot {
+        margin: 0 8px;
+        opacity: .5;
+    }
+
+    .kursi-legend {
+        display: flex;
+        justify-content: center;
         gap: 28px;
         margin-bottom: 30px;
         font-size: .85rem;
         color: var(--cinevo-muted);
     }
-    .kursi-legend span{ display:flex; align-items:center; gap:8px; }
-    .legend-box{ width:16px; height:16px; border-radius:4px; display:inline-block; }
-    .legend-box.available{ border:1.5px solid var(--cinevo-accent); background:transparent; }
-    .legend-box.booked{ background: var(--cinevo-booked); }
-    .legend-box.selected{ background: var(--cinevo-accent); }
 
-    .kursi-layout{
-        display:flex;
+    .kursi-legend span {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .legend-box {
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        display: inline-block;
+    }
+
+    .legend-box.available {
+        border: 1.5px solid var(--cinevo-pink-light);
+        background: transparent;
+    }
+
+    .legend-box.booked {
+        background: var(--cinevo-booked);
+    }
+
+    .legend-box.selected {
+        background: var(--cinevo-pink);
+    }
+
+    .kursi-layout {
+        display: flex;
         gap: 32px;
         flex-wrap: wrap;
-        align-items:flex-start;
-        justify-content:center;
+        align-items: flex-start;
+        justify-content: center;
     }
 
-    .screen-wrap{ text-align:center; margin-bottom: 26px; }
-    .screen-arc{
-        width: min(580px, 90%);
-        height: 14px;
+    .screen-wrap {
+        text-align: center;
+        margin-bottom: 26px;
+        width: 100%;
+    }
+
+    .screen-arc {
+        width: min(600px, 90%);
+        height: 16px;
         margin: 0 auto 10px;
         border-radius: 0 0 60px 60px / 0 0 40px 40px;
-        background: linear-gradient(180deg, rgba(212,175,55,.55), transparent);
-        box-shadow: 0 10px 30px -6px rgba(212,175,55,.45);
+        background: linear-gradient(
+            180deg,
+            rgba(232, 161, 196, 0.75),
+            rgba(232, 161, 196, 0.08)
+        );
+        box-shadow: 0 8px 25px rgba(232, 161, 196, 0.25);
     }
-    .screen-arc + span{
-        display:block;
+
+    .screen-arc + span {
+        display: block;
         letter-spacing: .3em;
         font-size: .72rem;
         color: var(--cinevo-muted);
         text-transform: uppercase;
     }
 
-    .kursi-blocks{ display:flex; flex-direction:column; gap:10px; }
-    .kursi-row{ display:flex; align-items:center; gap: 14px; }
-    .row-label{
+    .kursi-blocks {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .kursi-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .row-label {
         width: 18px;
-        text-align:center;
-        font-size:.8rem;
+        text-align: center;
+        font-size: .8rem;
         color: var(--cinevo-muted);
     }
-    .block{ display:flex; gap: 8px; }
-    .aisle{ width: 26px; }
 
-    .seat{
+    .block {
+        display: flex;
+        gap: 8px;
+    }
+
+    .aisle {
+        width: 26px;
+        flex-shrink: 0;
+    }
+
+    .seat {
         width: 34px;
         height: 34px;
+        padding: 0;
         border-radius: 8px;
         font-size: .72rem;
         font-weight: 600;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        cursor:pointer;
-        border: 1.5px solid var(--cinevo-accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: 1.5px solid var(--cinevo-pink-light);
         background: transparent;
         color: var(--cinevo-text);
         transition: transform .12s ease, background .12s ease;
     }
-    .seat:hover:not(:disabled){ transform: translateY(-2px); background: var(--cinevo-accent-soft); }
-    .seat--booked{
-        border-color: var(--cinevo-booked);
-        background: var(--cinevo-booked);
-        color: #6D7178;
-        cursor:not-allowed;
-    }
-    .seat--booked:hover{ transform:none; }
-    .seat--selected{
-        background: var(--cinevo-accent);
-        border-color: var(--cinevo-accent);
-        color: var(--cinevo-accent-dark);
+
+    .seat:hover:not(:disabled) {
+        transform: translateY(-2px);
+        background: var(--cinevo-pink-soft);
+        border-color: var(--cinevo-pink);
     }
 
-    .kursi-summary{
+    .seat--booked {
+        border-color: var(--cinevo-booked);
+        background: var(--cinevo-booked);
+        color: var(--cinevo-muted);
+        cursor: not-allowed;
+    }
+
+    .seat--booked:hover {
+        transform: none;
+    }
+
+    .seat--selected {
+        background: var(--cinevo-pink);
+        border-color: var(--cinevo-pink);
+        color: var(--cinevo-bg-dark);
+    }
+
+    .kursi-summary {
         width: 260px;
         background: var(--cinevo-panel);
         border: 1px solid var(--cinevo-border);
@@ -118,72 +186,119 @@
         position: sticky;
         top: 20px;
     }
-    .kursi-summary h3{
-        font-family:'Fraunces', serif;
+
+    .kursi-summary h3 {
+        font-family: 'Fraunces', serif;
         font-size: 1.05rem;
         margin: 0 0 14px;
         font-weight: 600;
+        color: var(--cinevo-pink-light);
     }
-    .selected-list{
-        list-style:none;
-        margin:0 0 18px;
-        padding:0;
+
+    .selected-list {
+        list-style: none;
+        margin: 0 0 18px;
+        padding: 0;
         max-height: 180px;
-        overflow-y:auto;
+        overflow-y: auto;
     }
-    .selected-list li{
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
+
+    .selected-list li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         padding: 8px 10px;
         border: 1px solid var(--cinevo-border);
         border-radius: 8px;
         margin-bottom: 6px;
         font-size: .88rem;
-    }
-    .selected-list li button{
-        background:none;
-        border:none;
-        color: var(--cinevo-muted);
-        cursor:pointer;
-        font-size: .95rem;
-        line-height:1;
-    }
-    .selected-list li button:hover{ color: var(--cinevo-text); }
-    .selected-list .empty{
-        color: var(--cinevo-muted);
-        border-style: dashed;
-        justify-content:center;
+        color: var(--cinevo-text);
     }
 
-    .summary-total{
-        display:flex;
-        justify-content:space-between;
-        align-items:baseline;
+    .selected-list li button {
+        background: none;
+        border: none;
+        color: var(--cinevo-muted);
+        cursor: pointer;
+        font-size: .95rem;
+        line-height: 1;
+    }
+
+    .selected-list li button:hover {
+        color: var(--cinevo-pink-light);
+    }
+
+    .selected-list .empty {
+        color: var(--cinevo-muted);
+        border-style: dashed;
+        justify-content: center;
+    }
+
+    .summary-total {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
         padding-top: 14px;
         margin-top: 4px;
         border-top: 1px solid var(--cinevo-border);
         margin-bottom: 18px;
     }
-    .summary-total span:first-child{ color: var(--cinevo-muted); font-size:.85rem; }
-    .summary-total span:last-child{ font-family:'Fraunces', serif; font-size:1.15rem; }
 
-    .btn-lanjut{
-        width:100%;
+    .summary-total span:first-child {
+        color: var(--cinevo-muted);
+        font-size: .85rem;
+    }
+
+    .summary-total span:last-child {
+        font-family: 'Fraunces', serif;
+        font-size: 1.15rem;
+        color: var(--cinevo-pink-light);
+    }
+
+    .btn-lanjut {
+        width: 100%;
         padding: 11px;
         border-radius: 9px;
         border: none;
-        background: var(--cinevo-accent);
-        color: var(--cinevo-accent-dark);
-        font-weight:600;
-        cursor:pointer;
-        transition: opacity .15s ease;
+        background: var(--cinevo-pink);
+        color: var(--cinevo-bg-dark);
+        font-weight: 600;
+        cursor: pointer;
+        transition: .15s ease;
     }
-    .btn-lanjut:disabled{ opacity:.4; cursor:not-allowed; }
 
-    @media (max-width: 720px){
-        .seat{ width: 28px; height: 28px; font-size: .64rem; }
-        .kursi-summary{ position:static; width:100%; }
+    .btn-lanjut:hover:not(:disabled) {
+        background: var(--cinevo-pink-light);
+    }
+
+    .btn-lanjut:disabled {
+        opacity: .4;
+        cursor: not-allowed;
+    }
+
+    @media (max-width: 720px) {
+        .seat {
+            width: 28px;
+            height: 28px;
+            font-size: .64rem;
+        }
+
+        .kursi-summary {
+            position: static;
+            width: 100%;
+        }
+
+        .kursi-row {
+            gap: 8px;
+        }
+
+        .block {
+            gap: 5px;
+        }
+
+        .aisle {
+            width: 15px;
+        }
     }
 </style>
 @endpush

@@ -1,61 +1,38 @@
-
-  /* 1. TEMA WARNA PINK
-   Ganti nilai variable ini kalau mau sesuaikan shade pink-nya */
-   
 :root {
-    --cinevo-pink: #e83e8c;
-    --cinevo-pink-dark: #c2185b;
+    --cinevo-bg: #450722;
+    --cinevo-bg-dark: #35051a;
+    --cinevo-bg-soft: #520b2b;
+    --cinevo-panel: #5c1034;
+    --cinevo-panel-hover: #691541;
+    --cinevo-pink: #e8a1c4;
+    --cinevo-pink-light: #f3c1da;
+    --cinevo-pink-soft: rgba(232, 161, 196, 0.15);
+    --cinevo-text: #ffffff;
+    --cinevo-muted: #d9a9bf;
+    --cinevo-border: rgba(243, 193, 218, 0.25);
 }
 
-.bg-gradient-primary {
-    background: linear-gradient(180deg, var(--cinevo-pink) 10%, var(--cinevo-pink-dark) 100%) !important;
+body.cinevo-admin-body {
+    background: #f8f5f7;
 }
 
-.text-primary {
-    color: var(--cinevo-pink) !important;
-}
-
-.btn-primary {
-    background-color: var(--cinevo-pink) !important;
-    border-color: var(--cinevo-pink) !important;
-}
-
-.btn-primary:hover,
-.btn-primary:focus {
-    background-color: var(--cinevo-pink-dark) !important;
-    border-color: var(--cinevo-pink-dark) !important;
-}
-
-.border-left-primary {
-    border-left: 0.25rem solid var(--cinevo-pink) !important;
-}
-
-.sidebar-dark .nav-item .nav-link {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.sidebar-dark .nav-item.active .nav-link,
-.sidebar-dark .nav-item .nav-link:hover {
-    color: #fff;
-}
-
-
-/* 2. SIDEBAR FIXED (cuma isinya yang scroll, bukan sidebarnya) */
 #accordionSidebar {
     position: fixed;
     top: 0;
     left: 0;
+    width: 14rem;
     height: 100vh;
     overflow-y: auto;
     z-index: 1039;
+    background: var(--cinevo-bg-dark) !important;
+    background-image: none !important;
 }
 
-/* Geser konten ke kanan sejauh lebar sidebar, biar nggak ketiban */
 #content-wrapper {
     margin-left: 14rem;
+    background: #f8f5f7 !important;
 }
 
-/* Saat sidebar di-toggle jadi mode kecil (ikon aja) */
 #accordionSidebar.toggled {
     width: 6.5rem !important;
 }
@@ -64,10 +41,291 @@ body.sidebar-toggled #content-wrapper {
     margin-left: 6.5rem;
 }
 
+.cinevo-admin-sidebar .sidebar-brand {
+    height: 76px;
+    padding: 0 18px;
+}
 
-/* 3. NAVBAR (TOPBAR) TETAP DI ATAS SAAT SCROLL */
-.topbar {
-    position: sticky;
-    top: 0;
-    z-index: 1030;
+.cinevo-admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--cinevo-pink-light);
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.cinevo-admin-brand-logo {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--cinevo-pink-soft);
+    border: 1px solid var(--cinevo-border);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.cinevo-admin-brand-logo img {
+    width: 27px !important;
+    height: 27px !important;
+    max-width: 27px !important;
+    object-fit: contain;
+}
+
+.cinevo-admin-sidebar .sidebar-divider {
+    border-top: 1px solid var(--cinevo-border);
+    margin: 12px 16px;
+}
+
+.cinevo-admin-section-title {
+    padding: 12px 24px 7px;
+    color: var(--cinevo-muted);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+}
+
+.cinevo-admin-sidebar .nav-item {
+    margin: 3px 12px;
+}
+
+.cinevo-admin-sidebar .nav-link {
+    color: var(--cinevo-muted) !important;
+    border-radius: 8px;
+    padding: 11px 14px !important;
+}
+
+.cinevo-admin-sidebar .nav-link i {
+    width: 22px;
+    margin-right: 5px;
+    color: var(--cinevo-muted);
+}
+
+.cinevo-admin-sidebar .nav-link:hover {
+    background: var(--cinevo-panel);
+    color: var(--cinevo-pink-light) !important;
+}
+
+.cinevo-admin-sidebar .nav-link:hover i {
+    color: var(--cinevo-pink-light);
+}
+
+.cinevo-admin-sidebar .nav-item.active .nav-link {
+    background: var(--cinevo-pink-soft);
+    color: var(--cinevo-pink-light) !important;
+    border-left: 3px solid var(--cinevo-pink);
+    padding-left: 11px !important;
+}
+
+.cinevo-admin-sidebar .nav-item.active .nav-link i {
+    color: var(--cinevo-pink);
+}
+
+.cinevo-sidebar-toggle {
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    background: var(--cinevo-pink-soft);
+    color: var(--cinevo-pink-light);
+    border: 1px solid var(--cinevo-border) !important;
+}
+
+.cinevo-sidebar-toggle i {
+    margin: 0 !important;
+    width: auto !important;
+}
+
+.cinevo-sidebar-toggle:hover {
+    background: var(--cinevo-pink);
+    color: var(--cinevo-bg-dark);
+}
+
+.cinevo-admin-navbar {
+    height: 64px;
+    min-height: 64px;
+    padding: 0 !important;
+    background: var(--cinevo-bg-dark) !important;
+    border-bottom: 1px solid var(--cinevo-border);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.cinevo-admin-navbar .container-fluid {
+    height: 64px;
+    padding: 0 24px !important;
+}
+
+.cinevo-admin-user {
+    display: flex !important;
+    align-items: center;
+    gap: 9px;
+    color: var(--cinevo-muted) !important;
+    font-weight: 600;
+    padding: 7px 4px !important;
+}
+
+.cinevo-admin-user:hover,
+.cinevo-admin-user:focus {
+    color: var(--cinevo-pink-light) !important;
+}
+
+.cinevo-admin-user-name {
+    color: var(--cinevo-muted);
+}
+
+.cinevo-admin-user:hover .cinevo-admin-user-name {
+    color: var(--cinevo-pink-light);
+}
+
+.cinevo-admin-user-icon {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px;
+    min-height: 36px;
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--cinevo-pink-soft);
+    border: 1px solid var(--cinevo-border);
+    color: var(--cinevo-pink-light);
+}
+
+.cinevo-admin-user-icon img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    display: block;
+}
+
+.cinevo-admin-dropdown {
+    min-width: 190px;
+    margin-top: 8px !important;
+    padding: 8px;
+    background: var(--cinevo-panel) !important;
+    border: 1px solid var(--cinevo-border) !important;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.cinevo-admin-dropdown-item {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px !important;
+    border-radius: 7px;
+    color: var(--cinevo-text) !important;
+    background: transparent;
+    border: 0;
+    width: 100%;
+}
+
+.cinevo-admin-dropdown-item i {
+    width: 18px;
+    color: var(--cinevo-pink-light);
+}
+
+.cinevo-admin-dropdown-item:hover {
+    background: var(--cinevo-panel-hover) !important;
+    color: var(--cinevo-pink-light) !important;
+}
+
+.cinevo-admin-dropdown .dropdown-divider {
+    border-color: var(--cinevo-border);
+}
+
+#content {
+    background: #f8f5f7;
+}
+
+.cinevo-admin-body .container-fluid {
+    padding: 28px 32px !important;
+}
+
+.cinevo-admin-body .card {
+    border: 1px solid #ead8e1;
+    border-radius: 10px;
+    box-shadow: 0 4px 18px rgba(69, 7, 34, 0.06);
+}
+
+.cinevo-admin-body .card-header {
+    background: #ffffff;
+    border-bottom: 1px solid #ead8e1;
+    color: var(--cinevo-bg-dark);
+}
+
+.cinevo-admin-body .btn-primary {
+    background: var(--cinevo-pink) !important;
+    border-color: var(--cinevo-pink) !important;
+    color: var(--cinevo-bg-dark) !important;
+    font-weight: 700;
+}
+
+.cinevo-admin-body .btn-primary:hover {
+    background: var(--cinevo-pink-light) !important;
+    border-color: var(--cinevo-pink-light) !important;
+    color: var(--cinevo-bg-dark) !important;
+}
+
+.cinevo-admin-body .table {
+    color: #4a3540;
+}
+
+.cinevo-admin-body .table thead th {
+    background: var(--cinevo-bg-dark);
+    color: var(--cinevo-pink-light);
+    border-color: var(--cinevo-bg-dark);
+}
+
+.cinevo-admin-body .table td,
+.cinevo-admin-body .table th {
+    vertical-align: middle;
+    border-color: #ead8e1;
+}
+
+.cinevo-admin-body .form-control,
+.cinevo-admin-body .form-select {
+    border: 1px solid #decbd5;
+    border-radius: 7px;
+}
+
+.cinevo-admin-body .form-control:focus,
+.cinevo-admin-body .form-select:focus {
+    border-color: var(--cinevo-pink);
+    box-shadow: 0 0 0 0.2rem var(--cinevo-pink-soft);
+}
+
+.cinevo-admin-body footer {
+    background: #ffffff !important;
+    border-top: 1px solid #ead8e1;
+}
+
+.cinevo-admin-body .scroll-to-top {
+    background: var(--cinevo-bg-dark) !important;
+    color: var(--cinevo-pink-light) !important;
+}
+
+.cinevo-admin-body .scroll-to-top:hover {
+    background: var(--cinevo-pink) !important;
+    color: var(--cinevo-bg-dark) !important;
+}
+
+#content-wrapper {
+    min-height: 100vh !important;
+}
+
+#content {
+    min-height: auto !important;
+}
+
+.cinevo-admin-body footer {
+    margin-bottom: 0 !important;
+}
+
+.cinevo-admin-body {
+    margin: 0 !important;
+    padding: 0 !important;
 }

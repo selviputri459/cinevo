@@ -38,7 +38,7 @@
                         <tr>
                             <th>Tanggal - Jam</th>
                             <td>:
-                                {{ \Carbon\Carbon::parse($booking->showtime->date)->format('d-m-Y') }} -
+                                {{ \Carbon\Carbon::parse($booking->showtime->date)->format('d-m-Y') }}
                                 {{ \Carbon\Carbon::parse($booking->showtime->time)->format('H:i') }} WIB
                             </td>
                         </tr>

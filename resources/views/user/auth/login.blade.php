@@ -22,6 +22,21 @@
                                     <form method="POST" action="{{ route('login') }}" class="user">
                                         @csrf
 
+                                        <div class="text-center mb-4">
+                                            <img id="preview-photo"
+                                                src="{{ $user->profile_photo ? asset('storage/' . $user->profile_photo) : asset('img/undraw_profile.svg') }}"
+                                                alt="Foto profil" class="rounded-circle mb-3"
+                                                style="width: 120px; height: 120px; object-fit: cover;">
+                                            <div>
+                                                <label for="profile_photo" class="btn btn-outline-secondary btn-sm mb-0">
+                                                    <i class="fas fa-camera"></i> Ganti Foto
+                                                </label>
+                                                <input type="file" name="profile_photo" id="profile_photo" class="d-none"
+                                                    accept="image/png, image/jpeg">
+                                                <small class="form-text text-muted">JPG/PNG, maks 2MB.</small>
+                                            </div>
+                                        </div>
+
                                         <div class="form-group">
                                             <input type="email" name="email" id="email" class="form-control form-control-user @error('email') is-invalid @enderror"
                                             value="{{ old('email') }}" placeholder="Enter Email Address...">
