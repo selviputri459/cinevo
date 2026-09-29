@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,500,600,700,800,900" rel="stylesheet">
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom-admin.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{ asset('img/logo.png') }}">
 
     @stack('styles')
 

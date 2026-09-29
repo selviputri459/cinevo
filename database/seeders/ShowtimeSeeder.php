@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Film;
+use App\Models\Studio;
 use App\Models\Showtime;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class ShowtimeSeeder extends Seeder
@@ -13,6 +14,16 @@ class ShowtimeSeeder extends Seeder
      */
     public function run(): void
     {
-        Showtime::factory()->count(18)->create();
+        if (Film::count() === 0) {
+            $this->command->warn('Belum ada film, Showtime dilewati. Input film dulu lewat halaman admin.');
+            return;
+        }
+
+        if (Studio::count() === 0) {
+            $this->command->warn('Belum ada studio, Showtime dilewati.');
+            return;
+        }
+
+        Showtime::factory()->count(20)->create();
     }
 }

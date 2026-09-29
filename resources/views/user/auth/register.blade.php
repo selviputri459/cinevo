@@ -16,21 +16,6 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        <div class="text-center mb-4">
-                            <img id="preview-photo"
-                                src="{{ $user->profile_photo ? asset('storage/' . $user->profile_photo) : asset('img/undraw_profile.svg') }}"
-                                alt="Foto profil" class="rounded-circle mb-3"
-                                style="width: 120px; height: 120px; object-fit: cover;">
-                            <div>
-                                <label for="profile_photo" class="btn btn-outline-secondary btn-sm mb-0">
-                                    <i class="fas fa-camera"></i> Ganti Foto
-                                </label>
-                                <input type="file" name="profile_photo" id="profile_photo" class="d-none"
-                                    accept="image/png, image/jpeg">
-                                <small class="form-text text-muted">JPG/PNG, maks 2MB.</small>
-                            </div>
-                        </div>
-
                         <div class="row mb-3">
                             <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
 

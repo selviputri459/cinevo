@@ -240,20 +240,28 @@ body.cinevo-body {
     border-color: var(--cinevo-border);
 }
 
-/* TIME BUTTON */
 .cinevo-time-btn {
-    background: var(--cinevo-pink) !important;
+    background: transparent !important;
     border: 1px solid var(--cinevo-pink) !important;
-    color: var(--cinevo-bg-dark) !important;
+    color: var(--cinevo-pink-light) !important;
     font-weight: 700;
     border-radius: 7px;
     padding: 8px 14px;
+    transition: 0.2s ease;
 }
 
 .cinevo-time-btn:hover {
-    background: var(--cinevo-pink-light) !important;
+    background: var(--cinevo-pink-soft) !important;
     border-color: var(--cinevo-pink-light) !important;
+    color: var(--cinevo-pink-light) !important;
+}
+
+/* Saat jam dipilih */
+.btn-check:checked + .cinevo-time-btn {
+    background: var(--cinevo-pink) !important;
+    border-color: var(--cinevo-pink) !important;
     color: var(--cinevo-bg-dark) !important;
+    box-shadow: 0 0 0 3px rgba(232, 161, 196, 0.12);
 }
 
 /* KURSI */
@@ -327,4 +335,67 @@ body.cinevo-body {
 ::selection {
     background: var(--cinevo-pink);
     color: var(--cinevo-bg-dark);
+}
+
+/* LOGIN USER */
+.login-remember {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 2px 0 14px;
+}
+
+.login-remember input {
+    width: 13px;
+    height: 13px;
+    margin: 0;
+}
+
+.login-remember label {
+    margin: 0;
+    color: var(--cinevo-text);
+    font-size: 14px;
+}
+
+.login-button {
+    display: block;
+    width: 100%;
+    height: 38px;
+    padding: 0 14px;
+    border: 1px solid var(--cinevo-pink) !important;
+    border-radius: 7px;
+    background: var(--cinevo-pink) !important;
+    color: var(--cinevo-bg-dark) !important;
+    font-family: "Nunito", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.login-button:hover {
+    background: var(--cinevo-pink-light) !important;
+    border-color: var(--cinevo-pink-light) !important;
+    color: var(--cinevo-bg-dark) !important;
+}
+
+.login-button i {
+    margin-right: 5px;
+}
+
+.login-register {
+    margin-top: 18px;
+    text-align: center;
+    color: var(--cinevo-text);
+    font-size: 14px;
+}
+
+.login-register a {
+    color: var(--cinevo-pink) !important;
+    text-decoration: none;
+}
+
+.login-register a:hover {
+    color: var(--cinevo-pink-light) !important;
+    text-decoration: underline;
 }

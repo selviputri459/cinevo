@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Booking;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Showtime;
 use Illuminate\Database\Seeder;
 
 class BookingSeeder extends Seeder
@@ -13,6 +13,11 @@ class BookingSeeder extends Seeder
      */
     public function run(): void
     {
+        if (Showtime::count() === 0) {
+            $this->command->warn('Belum ada jadwal tayang, BookingSeeder dilewati. Jalankan ShowtimeSeeder dulu.');
+            return;
+        }
+
         Booking::factory()->count(5)->create();
     }
 }

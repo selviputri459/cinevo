@@ -35,7 +35,6 @@ class ShowtimeFactory extends Factory
                 30000, 
                 35000, 
                 40000, 
-                45000, 
             ]), 
         ]; 
     } 

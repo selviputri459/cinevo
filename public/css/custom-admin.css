@@ -329,3 +329,168 @@ body.sidebar-toggled #content-wrapper {
     margin: 0 !important;
     padding: 0 !important;
 }
+
+/* LOGIN ADMIN */
+body.cinevo-admin-login {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle at top right, rgba(232, 161, 196, 0.10), transparent 35%), var(--cinevo-bg);
+    font-family: "Nunito", sans-serif;
+}
+
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 430px;
+    padding: 38px 40px;
+    background: var(--cinevo-panel);
+    border: 1px solid var(--cinevo-border);
+    border-radius: 14px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.30);
+    box-sizing: border-box;
+}
+
+.login-logo {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--cinevo-pink-soft);
+    border: 1px solid var(--cinevo-border);
+}
+
+.login-logo img {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+}
+
+.login-card h1 {
+    margin: 0;
+    text-align: center;
+    color: var(--cinevo-pink-light);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.login-subtitle {
+    margin: 6px 0 28px;
+    text-align: center;
+    color: var(--cinevo-muted);
+    font-size: 0.9rem;
+}
+
+.login-form-group {
+    margin-bottom: 18px;
+}
+
+.login-form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--cinevo-pink-light);
+    font-size: 0.88rem;
+    font-weight: 600;
+}
+
+.login-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--cinevo-bg-soft);
+    border: 1px solid var(--cinevo-border);
+    border-radius: 8px;
+    padding: 0 13px;
+}
+
+.login-input:focus-within {
+    border-color: var(--cinevo-pink);
+    box-shadow: 0 0 0 0.2rem var(--cinevo-pink-soft);
+}
+
+.login-input i {
+    color: var(--cinevo-muted);
+    width: 18px;
+    text-align: center;
+}
+
+.login-input input {
+    width: 100%;
+    padding: 11px 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--cinevo-text);
+    font-family: "Nunito", sans-serif;
+}
+
+.login-input input::placeholder {
+    color: var(--cinevo-muted);
+}
+
+.login-remember {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0 20px;
+}
+
+.login-remember input {
+    accent-color: var(--cinevo-pink);
+}
+
+.login-remember label {
+    margin: 0;
+    color: var(--cinevo-muted);
+    font-size: 0.88rem;
+}
+
+.login-button {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid var(--cinevo-pink);
+    border-radius: 8px;
+    background: var(--cinevo-pink);
+    color: var(--cinevo-bg-dark);
+    font-family: "Nunito", sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.login-button:hover {
+    background: var(--cinevo-pink-light);
+    border-color: var(--cinevo-pink-light);
+    color: var(--cinevo-bg-dark);
+}
+
+.login-button i {
+    margin-right: 6px;
+}
+
+.login-alert {
+    margin-bottom: 18px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 180, 180, 0.35);
+    border-radius: 8px;
+    background: rgba(220, 53, 69, 0.15);
+    color: #ffd4d8;
+    font-size: 0.88rem;
+}
+
+@media (max-width: 576px) {
+    .login-card {
+        padding: 30px 24px;
+    }
+}
