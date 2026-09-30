@@ -79,22 +79,22 @@
         <div class="carousel-item active">
             <img src="{{ asset('img/poster1.jpg') }}" class="d-block w-100" alt="Poster 1">
             <div class="carousel-caption d-none d-md-block">
-                <h5>First slide label</h5>
-                <p>Some representative placeholder content for the first slide.</p>
+                <h5>Temukan Ceritamu</h5>
+                <p>Film favoritmu, siap menemani waktumu..</p>
             </div>
         </div>
         <div class="carousel-item">
             <img src="{{ asset('img/poster2.jpg') }}" class="d-block w-100" alt="Poster 2">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Second slide label</h5>
-                <p>Some representative placeholder content for the second slide.</p>
+                <h5>Waktunya Nonton</h5>
+                <p>Pilih film, tentukan jadwal, dan nikmati ceritanya.</p>
             </div>
         </div>
         <div class="carousel-item">
             <img src="{{ asset('img/poster3.jpeg') }}" class="d-block w-100" alt="Poster 3">
             <div class="carousel-caption d-none d-md-block">
-                <h5>Third slide label</h5>
-                <p>Some representative placeholder content for the third slide.</p>
+                <h5>Segera Hadir</h5>
+                <p>Bersiap untuk cerita baru di Cinevo.</p>
             </div>
         </div>
     </div>
@@ -117,7 +117,7 @@
             <div class="col-6 col-md-3">
                 <div class="card h-100 shadow-sm film-card">
                     <img src="{{ $film->poster ? asset('storage/'.$film->poster) : 'https://placehold.co/300x400?text=Poster' }}"
-                        class="card-img-top" alt="{{ $film->title }}" style="height:300px; object-fit:cover;">
+                        class="card-img-top" alt="{{ $film->title }}" style="height:360px; object-fit:cover;">
                     <div class="card-body p-2">
                         <p class="mb-1 small fw-semibold">{{ $film->title }}</p>
                         <p class="mb-1 small text-muted">{{ $film->genre }} · {{ $film->duration }} menit</p>
@@ -140,7 +140,7 @@
             <div class="col-6 col-md-3">
                 <div class="card h-100 shadow-sm film-card">
                     <img src="{{ $film->poster ? asset('storage/'.$film->poster) : 'https://placehold.co/300x400?text=Poster' }}"
-                        class="card-img-top" alt="{{ $film->title }}" style="height:300px; object-fit:cover;">
+                        class="card-img-top" alt="{{ $film->title }}" style="height:360px; object-fit:cover;">
                     <div class="card-body p-2">
                         <p class="mb-1 small fw-semibold">{{ $film->title }}</p>
                         <p class="mb-2 small text-muted">{{ $film->genre }} · {{ $film->duration }} menit</p>

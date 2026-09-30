@@ -129,6 +129,7 @@
         @yield('content')
     </main>
 
+        @include('partials.footer')
 
     {{-- SCRIPTS --}}
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
