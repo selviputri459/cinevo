@@ -52,5 +52,19 @@
             </form>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if (Session::has('success'))
+    <script>
+        Swal.fire({
+            title: "Berhasil!",
+            text: "{{ Session::get('success') }}",
+            icon: "success",
+            confirmButtonText: "OK"
+        });
+    </script>
+@endif
+
 </body>
 </html>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Studio;
+use App\Models\BookingDetail;
 use Illuminate\Http\Request;
 
 class StudioController extends Controller
@@ -39,7 +40,9 @@ class StudioController extends Controller
             'capacity' => 'Jumlah Kursi',
         ]);
 
-        Studio::create($validated);
+        $studio = Studio::create($validated); 
+        $studio->syncSeats();
+
         return redirect()->route('admin.studio.index')->with('success', 'Data studio berhasil ditambahkan.');
     }
 
@@ -62,7 +65,7 @@ class StudioController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Studio $studio)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -73,7 +76,18 @@ class StudioController extends Controller
             'capacity' => 'Jumlah Kursi',
         ]);
 
+        // cek: kursi yang akan dihapus (kalau kapasitas dikurangi) jangan sampai sudah pernah dibooking
+        $newNames = Studio::seatNamesFor((int) $validated['capacity']);
+        $seatIdsToRemove = $studio->seats()->whereNotIn('seat_name', $newNames)->pluck('id');
+
+        if (BookingDetail::whereIn('seat_id', $seatIdsToRemove)->exists()) {
+            return back()->withInput()->withErrors([
+                'capacity' => 'Kapasitas tidak bisa dikurangi karena ada kursi yang sudah dibooking.',
+            ]);
+        }
+
         $studio->update($validated);
+        $studio->syncSeats();
 
         return redirect()->route('admin.studio.index')->with('success', 'Data studio berhasil diperbarui.');
     }

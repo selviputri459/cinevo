@@ -32,7 +32,7 @@
     {{-- Form pilih jam --}}
     <form action="" method="GET" id="pilihJadwalForm">
         @if ($showtimesByStudio->isEmpty())
-            <p class="text-muted">Tidak ada jadwal tayang di tanggal ini.</p>
+            <p class="cinevo-muted">Tidak ada jadwal tayang di tanggal ini.</p>
         @endif
 
         @foreach ($showtimesByStudio as $studioId => $showtimes)

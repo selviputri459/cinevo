@@ -108,28 +108,48 @@
         text-transform: uppercase;
     }
 
+    /* DIUBAH: ukuran kursi & celah dijadikan variabel supaya lebar blok dihitung otomatis */
     .kursi-blocks {
+        --seat-size: 34px;
+        --seat-gap: 8px;
+        --per-block: 5; /* nilai asli diisi dari controller lewat atribut style di HTML */
+
         display: flex;
         flex-direction: column;
         gap: 10px;
+        max-width: 100%;
+        overflow-x: auto;   /* kalau layar sempit, denah bisa digeser, tidak kepotong */
+        padding: 4px 0;
     }
 
     .kursi-row {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 14px;
     }
 
     .row-label {
         width: 18px;
+        flex-shrink: 0;
         text-align: center;
         font-size: .8rem;
         color: var(--cinevo-muted);
     }
 
+    /* DIUBAH: label baris yang blok kanannya kosong disembunyikan, tapi ruangnya tetap ada */
+    .row-label--hidden {
+        visibility: hidden;
+    }
+
+    /* DIUBAH: lebar blok tetap = (jumlah kursi x ukuran) + (jumlah celah x gap).
+       Jadi blok kosong atau setengah terisi tetap selebar blok penuh. */
     .block {
         display: flex;
-        gap: 8px;
+        gap: var(--seat-gap);
+        flex-shrink: 0;
+        justify-content: flex-start;
+        width: calc(var(--per-block) * var(--seat-size) + (var(--per-block) - 1) * var(--seat-gap));
     }
 
     .aisle {
@@ -137,9 +157,11 @@
         flex-shrink: 0;
     }
 
+    /* DIUBAH: ukuran kursi mengikuti variabel --seat-size */
     .seat {
-        width: 34px;
-        height: 34px;
+        width: var(--seat-size);
+        height: var(--seat-size);
+        flex-shrink: 0;
         padding: 0;
         border-radius: 8px;
         font-size: .72rem;
@@ -276,10 +298,14 @@
         cursor: not-allowed;
     }
 
+    /* DIUBAH: di HP cukup ganti variabel, lebar blok ikut menyesuaikan otomatis */
     @media (max-width: 720px) {
+        .kursi-blocks {
+            --seat-size: 28px;
+            --seat-gap: 5px;
+        }
+
         .seat {
-            width: 28px;
-            height: 28px;
             font-size: .64rem;
         }
 
@@ -290,10 +316,6 @@
 
         .kursi-row {
             gap: 8px;
-        }
-
-        .block {
-            gap: 5px;
         }
 
         .aisle {
@@ -333,13 +355,20 @@
                 <span>Layar</span>
             </div>
 
-            <div class="kursi-blocks">
+            {{-- DIUBAH: --per-block diisi dari controller --}}
+            <div class="kursi-blocks" style="--per-block: {{ $seatsPerBlock }};">
                 @foreach($seatRows as $baris => $blocks)
+                    {{-- DIUBAH: ambil blok kiri & kanan di awal, supaya bisa dicek kosong atau tidak --}}
+                    @php
+                        $leftBlock  = $blocks->get(0, collect());
+                        $rightBlock = $blocks->get(1, collect());
+                    @endphp
+
                     <div class="kursi-row">
                         <span class="row-label">{{ $baris }}</span>
 
                         <div class="block">
-                            @foreach($blocks->get(0, collect()) as $seat)
+                            @foreach($leftBlock as $seat)
                                 @php $isBooked = in_array($seat->id, $bookedSeatIds); @endphp
                                 <button
                                     type="button"
@@ -354,7 +383,7 @@
                         <div class="aisle"></div>
 
                         <div class="block">
-                            @foreach($blocks->get(1, collect()) as $seat)
+                            @foreach($rightBlock as $seat)
                                 @php $isBooked = in_array($seat->id, $bookedSeatIds); @endphp
                                 <button
                                     type="button"
@@ -366,7 +395,8 @@
                             @endforeach
                         </div>
 
-                        <span class="row-label">{{ $baris }}</span>
+                        {{-- DIUBAH: kalau blok kanan kosong, label disembunyikan --}}
+                        <span class="row-label {{ $rightBlock->isEmpty() ? 'row-label--hidden' : '' }}">{{ $baris }}</span>
                     </div>
                 @endforeach
             </div>
