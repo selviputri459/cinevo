@@ -86,19 +86,34 @@
 
     <!-- Booking Terbaru -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card-header py-3 d-flex flex-wrap align-items-center justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Booking Terbaru</h6>
+            <div>
+                <a href="{{ url()->current() }}?filter=semua"
+                    class="btn btn-sm {{ $filter === 'semua' ? 'btn-primary' : 'btn-outline-primary' }}">
+                    Semua
+                </a>
+                <a href="{{ url()->current() }}?filter=baru"
+                    class="btn btn-sm {{ $filter === 'baru' ? 'btn-danger' : 'btn-outline-danger' }}">
+                    Baru <span class="badge badge-light">{{ $totalBaru }}</span>
+                </a>
+            </div>
         </div>
-        <div class="card-body">
+        <div class="card-body p-0">
             @forelse ($bookingTerbaru as $booking)
-                <div class="d-flex align-items-center {{ !$loop->last ? 'border-bottom pb-3 mb-3' : '' }}">
+                <div class="d-flex align-items-center p-3 {{ !$loop->last ? 'border-bottom' : '' }} {{ $booking->is_new ? 'booking-baru' : '' }}">
                     <img src="{{ $booking->showtime->film->poster ? asset('storage/' . $booking->showtime->film->poster) : asset('img/no-image.png') }}"
                          alt="{{ $booking->showtime->film->title }}"
                          class="rounded"
                          style="width: 60px; height: 80px; object-fit: cover;">
 
                     <div class="ml-3">
-                        <div class="font-weight-bold">{{ $booking->showtime->film->title }}</div>
+                        <div class="font-weight-bold">
+                            {{ $booking->showtime->film->title }}
+                            @if ($booking->is_new)
+                                <span class="badge badge-baru ml-2">BARU</span>
+                            @endif
+                        </div>
                         <div class="text-muted small">
                             {{ $booking->showtime->studio->name }} -
                             {{ \Carbon\Carbon::parse($booking->showtime->date)->translatedFormat('d M Y') }}
@@ -110,9 +125,24 @@
                     </div>
                 </div>
             @empty
-                <p class="text-muted mb-0">Belum ada booking.</p>
+                <p class="text-muted mb-0 p-3">
+                    {{ $filter === 'baru' ? 'Tidak ada booking baru.' : 'Belum ada booking.' }}
+                </p>
             @endforelse
         </div>
     </div>
 
 @endsection
+
+@push('styles')
+<style>
+    .booking-baru {
+        background: #fdecef;
+        border-left: 4px solid #e74a3b;
+    }
+    .booking-baru .badge-baru {
+        background: #e74a3b;
+        color: #fff;
+    }
+</style>
+@endpush

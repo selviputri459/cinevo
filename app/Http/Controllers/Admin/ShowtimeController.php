@@ -13,10 +13,67 @@ class ShowtimeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $showtimes = Showtime::with(['film', 'studio'])->latest()->paginate(10);
-        return view('admin.showtime.index', compact('showtimes'));
+        // Tab aktif: 'aktif' (default) atau 'riwayat'
+        $tab = $request->get('tab') === 'riwayat' ? 'riwayat' : 'aktif';
+
+        $query = Showtime::with(['film', 'studio']);
+
+        // Pisahkan data sesuai tab
+        $tab === 'riwayat' ? $query->past() : $query->upcoming();
+
+        // 1. Search menyeluruh (judul film ATAU nama studio)
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('film', function ($f) use ($search) {
+                    $f->where('title', 'like', "%{$search}%");
+                })->orWhereHas('studio', function ($s) use ($search) {
+                    $s->where('name', 'like', "%{$search}%");
+                });
+            });
+        }
+
+        // 2. Filter per film
+        if ($request->filled('film_id')) {
+            $query->where('film_id', $request->film_id);
+        }
+
+        // 3. Filter per studio
+        if ($request->filled('studio_id')) {
+            $query->where('studio_id', $request->studio_id);
+        }
+
+        // 4. Filter per tanggal
+        if ($request->filled('date')) {
+            $query->whereDate('date', $request->date);
+        }
+
+        // 5. Filter rentang jam
+        if ($request->filled('time_from')) {
+            $query->whereTime('time', '>=', $request->time_from);
+        }
+        if ($request->filled('time_to')) {
+            $query->whereTime('time', '<=', $request->time_to);
+        }
+
+        // Urutan: aktif = terdekat dulu (ASC), riwayat = paling baru lewat dulu (DESC)
+        $direction = $tab === 'riwayat' ? 'DESC' : 'ASC';
+        $showtimes = $query->orderByRaw("TIMESTAMP(`date`, `time`) {$direction}")
+            ->paginate(10)
+            ->withQueryString();
+
+        $films   = Film::orderBy('title')->get();
+        $studios = Studio::orderBy('name')->get();
+
+        // Jumlah untuk badge di tab
+        $totalAktif   = Showtime::upcoming()->count();
+        $totalRiwayat = Showtime::past()->count();
+
+        return view('admin.showtime.index', compact(
+            'showtimes', 'films', 'studios', 'tab', 'totalAktif', 'totalRiwayat'
+        ));
     }
 
     /**

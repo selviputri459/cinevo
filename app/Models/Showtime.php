@@ -31,4 +31,14 @@ class Showtime extends Model
     {
         return $this->hasMany(Booking::class);
     }
+
+    public function scopeUpcoming($query)
+    {
+        return $query->whereRaw("TIMESTAMP(`date`, `time`) >= ?", [now()->format('Y-m-d H:i:s')]);
+    }
+
+    public function scopePast($query)
+    {
+        return $query->whereRaw("TIMESTAMP(`date`, `time`) < ?", [now()->format('Y-m-d H:i:s')]);
+    }
 }

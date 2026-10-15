@@ -355,10 +355,9 @@
                 <span>Layar</span>
             </div>
 
-            {{-- DIUBAH: --per-block diisi dari controller --}}
             <div class="kursi-blocks" style="--per-block: {{ $seatsPerBlock }};">
                 @foreach($seatRows as $baris => $blocks)
-                    {{-- DIUBAH: ambil blok kiri & kanan di awal, supaya bisa dicek kosong atau tidak --}}
+                    {{-- ambil blok kiri & kanan di awal, supaya bisa dicek kosong atau tidak --}}
                     @php
                         $leftBlock  = $blocks->get(0, collect());
                         $rightBlock = $blocks->get(1, collect());

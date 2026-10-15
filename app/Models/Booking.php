@@ -38,4 +38,18 @@ class Booking extends Model
     {
         return $this->hasMany(BookingDetail::class);
     }
+
+    protected $casts = [
+    'seen_at' => 'datetime',
+    ];
+
+    public function scopeUnseen($query)
+    {
+        return $query->whereNull('seen_at');
+    }
+
+    public function getIsNewAttribute()
+    {
+        return is_null($this->seen_at);
+    }
 }

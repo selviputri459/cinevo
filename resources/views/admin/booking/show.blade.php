@@ -20,6 +20,18 @@
                 <div class="col-md-9">
                     <table class="table table-borderless">
                         <tr>
+                            <th>Nama Customer</th>
+                            <td>: {{ $booking->user->name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>: {{ $booking->user->email }}</td>
+                        </tr>
+                        <tr>
+                            <th>No. Telepon</th>
+                            <td>: {{ $booking->user->phone ?? '-' }}</td>
+                        </tr>
+                        <tr>
                             <th style="width: 180px;">Judul Film</th>
                             <td>: {{ $booking->film->title }}</td>
                         </tr>

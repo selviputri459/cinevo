@@ -109,6 +109,10 @@ class BookingController extends Controller
 
         $booking->load(['showtime.film', 'showtime.studio', 'bookingDetails.seat']);
 
+        if (is_null($booking->seen_at)) {
+            $booking->forceFill(['seen_at' => now()])->save();
+        }
+
         return view('user.bookings.show', compact('booking'));
     }
 

@@ -26,9 +26,14 @@
                     </thead>
                     <tbody>
                         @forelse ($bookings as $booking)
-                            <tr>
+                            <tr class="{{ $booking->is_new ? 'booking-baru' : '' }}">
                                 <td>{{ $bookings->firstItem() + $loop->index }}</td>
-                                <td>{{ $booking->booking_code }}</td>
+                                <td>
+                                    {{ $booking->booking_code }}
+                                    @if ($booking->is_new)
+                                        <span class="badge badge-baru ml-1">BARU</span>
+                                    @endif
+                                </td>
                                 <td>{{ $booking->user->name }}</td>
                                 <td>{{ $booking->film->title }}</td>
                                 <td>
@@ -45,7 +50,7 @@
                                             default => 'warning',
                                         };
                                     @endphp
-                                    <span class="badge bg-{{ $badge }}">{{ $booking->status }}</span>
+                                    <span class="badge badge-{{ $badge }}">{{ $booking->status }}</span>
                                 </td>
                                 <td>
                                     <a href="{{ route('admin.booking.show', $booking) }}" class="btn btn-info btn-sm"
@@ -69,3 +74,18 @@
         </div>
     </div>
 @endsection
+
+@push('styles')
+<style>
+    .table tr.booking-baru td {
+        background: #fdecef;
+    }
+    .table tr.booking-baru td:first-child {
+        border-left: 4px solid #e74a3b;
+    }
+    .badge-baru {
+        background: #e74a3b;
+        color: #fff;
+    }
+</style>
+@endpush

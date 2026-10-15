@@ -50,6 +50,11 @@ class AdminController extends Controller
         return redirect()->route('admin.data-admin.index')->with('success', 'Admin baru berhasil ditambahkan.');
     }
 
+    public function show($id)
+    {
+        $booking = Booking::with(['user', 'showtime.film', 'showtime.studio'])->findOrFail($id);
+        return view('admin.booking.show', compact('booking'));
+    }
     public function destroy(Admin $admin)
     {
         // Admin tidak boleh menghapus akunnya sendiri (supaya tidak terkunci dari sistem)

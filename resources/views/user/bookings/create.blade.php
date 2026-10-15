@@ -171,6 +171,11 @@
                 <input type="text" value="{{ auth()->user()->email }}" readonly>
             </div>
 
+            <div class="field">
+                <label>No. Telepon</label>
+                <input type="text" value="{{ auth()->user()->phone }}" readonly>
+            </div>
+
             <input type="hidden" name="showtime_id" value="{{ $showtime->id }}">
             @foreach ($seats as $seat)
                 <input type="hidden" name="seat_id[]" value="{{ $seat->id }}">

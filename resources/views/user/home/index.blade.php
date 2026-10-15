@@ -129,7 +129,7 @@
                 </div>
             </div>
         @empty
-            <p class="text-muted">Belum ada film yang sedang tayang.</p>
+            <p class="cinevo-muted">Belum ada film yang sedang tayang.</p>
         @endforelse
     </div>
 
@@ -149,7 +149,7 @@
                 </div>
             </div>
         @empty
-            <p class="text-muted">Belum ada film yang akan segera tayang.</p>
+            <p class="cinevo-muted">Belum ada film yang akan segera tayang.</p>
         @endforelse
     </div>
 
