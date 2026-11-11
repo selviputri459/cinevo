@@ -13,11 +13,9 @@
     <div class="card shadow mb-4">
         <div class="card-body">
 
-            {{-- ===== 1. FORM FILTER (paling atas) ===== --}}
             <form method="GET" action="{{ url()->current() }}" class="mb-4">
                 <input type="hidden" name="tab" value="{{ $tab }}">
                 <div class="row">
-                    {{-- Search menyeluruh --}}
                     <div class="col-md-12 mb-2">
                         <div class="input-group">
                             <input type="text" name="search" class="form-control"
@@ -31,7 +29,6 @@
                         </div>
                     </div>
 
-                    {{-- Filter film --}}
                     <div class="col-md-3 mb-2">
                         <select name="film_id" class="form-control">
                             <option value="">Semua Film</option>
@@ -43,7 +40,6 @@
                         </select>
                     </div>
 
-                    {{-- Filter studio --}}
                     <div class="col-md-3 mb-2">
                         <select name="studio_id" class="form-control">
                             <option value="">Semua Studio</option>
@@ -55,12 +51,10 @@
                         </select>
                     </div>
 
-                    {{-- Filter tanggal --}}
                     <div class="col-md-2 mb-2">
                         <input type="date" name="date" class="form-control" value="{{ request('date') }}">
                     </div>
 
-                    {{-- Filter jam dari - sampai --}}
                     <div class="col-md-2 mb-2">
                         <input type="time" name="time_from" class="form-control"
                             value="{{ request('time_from') }}" title="Jam mulai dari">
@@ -81,7 +75,6 @@
                 </div>
             </form>
 
-            {{-- ===== 2. TAB (pindah ke sini, tepat di atas tabel) ===== --}}
             <ul class="nav nav-tabs mb-0">
                 <li class="nav-item">
                     <a class="nav-link {{ $tab === 'aktif' ? 'active' : '' }}"
@@ -97,7 +90,6 @@
                 </li>
             </ul>
 
-            {{-- ===== 3. TABEL ===== --}}
             <div class="table-responsive">
                 <table class="table table-bordered align-middle" width="100%" cellspacing="0">
                     <thead>

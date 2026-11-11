@@ -14,22 +14,21 @@ use Illuminate\Support\Str;
 class BookingController extends Controller
 {
     /**
-     * Halaman "Riwayat Booking" - daftar semua booking milik user, bisa difilter per tab.
+     * 
      */
     public function index(Request $request)
     {
         $status = $request->query('status', 'semua');
 
         $statusMap = [
-            'selesai' => 'Lunas',
-            'menunggu' => 'Menunggu Bayar',
-            'dibatalkan' => 'Dibatalkan',
+            'selesai'    => ['Lunas'],
+            'menunggu'   => ['Menunggu Bayar', 'Menunggu Verifikasi'],
+            'dibatalkan' => ['Dibatalkan'],
         ];
-
         $bookings = Booking::with(['showtime.film', 'showtime.studio'])
             ->where('user_id', auth()->id())
             ->when(isset($statusMap[$status]), function ($query) use ($statusMap, $status) {
-                $query->where('status', $statusMap[$status]);
+                $query->whereIn('status', $statusMap[$status]);
             })->latest()->get();
 
         return view('user.bookings.index', compact('bookings', 'status'));
@@ -64,10 +63,28 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
+        $user = auth()->user();
+
+        if (empty($user->phone)) {
+            $request->validate([
+                'phone' => ['required', 'regex:/^(08|628)[0-9]{8,12}$/', 'unique:users,phone'],
+            ], [
+                'phone.required' => 'No. telepon wajib diisi sebelum booking tiket.',
+                'phone.regex'    => 'Format no. telepon tidak valid (contoh: 08123456789).',
+                'phone.unique'   => 'No. telepon ini sudah dipakai akun lain.',
+            ]);
+
+            $user->update(['phone' => $request->phone]);
+        }
+
         $validated = $request->validate([
             'showtime_id' => ['required', 'exists:showtimes,id'],
             'seat_id' => ['required', 'array', 'min:1'],
             'seat_id.*' => ['exists:seats,id'],
+            'payment_method'  => ['required', 'in:cash,transfer'],
+            'payment_channel' => ['required_if:payment_method,transfer', 'nullable', 'in:Mandiri,BNI,DANA'],
+            'sender_account'  => ['required_if:payment_method,transfer', 'nullable', 'string', 'max:100'],
+            'payment_proof'   => ['required_if:payment_method,transfer', 'nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ]);
 
         $showtime = Showtime::findOrFail($validated['showtime_id']);
@@ -79,7 +96,13 @@ class BookingController extends Controller
                 ->withErrors(['seat_id' => 'Ada kursi yang baru saja dibooking orang lain, silakan pilih ulang.']);
         }
 
-        $booking = DB::transaction(function () use ($showtime, $seatIds) {
+       $isTransfer = $validated['payment_method'] === 'transfer';
+
+        $proofPath = $isTransfer
+            ? $request->file('payment_proof')->store('payment-proofs', 'public')
+            : null;
+
+        $booking = DB::transaction(function () use ($showtime, $seatIds, $validated, $isTransfer, $proofPath) {
             $booking = Booking::create([
                 'booking_code' => 'BK-' . strtoupper(Str::random(8)),
                 'user_id' => auth()->id(),
@@ -87,7 +110,11 @@ class BookingController extends Controller
                 'showtime_id' => $showtime->id,
                 'ticket_quantity' => count($seatIds),
                 'total_price' => count($seatIds) * $showtime->price,
-                'status' => 'Menunggu Bayar',
+                'status' => $isTransfer ? 'Menunggu Verifikasi' : 'Menunggu Bayar',
+                'payment_method'  => $validated['payment_method'],
+                'payment_channel' => $isTransfer ? $validated['payment_channel'] : null,
+                'sender_account'  => $isTransfer ? $validated['sender_account'] : null,
+                'payment_proof'   => $proofPath,
             ]);
 
             foreach ($seatIds as $seatId) {
@@ -109,10 +136,6 @@ class BookingController extends Controller
 
         $booking->load(['showtime.film', 'showtime.studio', 'bookingDetails.seat']);
 
-        if (is_null($booking->seen_at)) {
-            $booking->forceFill(['seen_at' => now()])->save();
-        }
-
         return view('user.bookings.show', compact('booking'));
     }
 
@@ -123,8 +146,8 @@ class BookingController extends Controller
     {
         abort_if($booking->user_id !== auth()->id(), 403);
 
-        if ($booking->status !== 'Menunggu Bayar') {
-            return back()->withErrors(['status' => 'Booking ini sudah tidak bisa dibatalkan.']);
+        if ($booking->status !== 'Menunggu Bayar' || $booking->isTransfer()) {
+            return back()->withErrors(['status' => 'Booking ini tidak bisa dibatalkan sendiri. Hubungi admin lewat WhatsApp.']);
         }
 
         $booking->update(['status' => 'Dibatalkan']);
@@ -139,8 +162,17 @@ class BookingController extends Controller
     private function seatsAlreadyBooked(Showtime $showtime, $seatIds): bool
     {
         return BookingDetail::whereHas('booking', function ($query) use ($showtime) {
-                $query->where('showtime_id', $showtime->id)
-                      ->whereIn('status', ['Menunggu Bayar', 'Lunas']);
+                $query->where('showtime_id', $showtime->id)->whereIn('status', ['Menunggu Bayar', 'Menunggu Verifikasi', 'Lunas']);
             })->whereIn('seat_id', $seatIds)->exists();
+    }
+
+    public function ticket(Booking $booking)
+    {
+        abort_if($booking->user_id !== auth()->id(), 403);
+        abort_unless($booking->isTransfer(), 404);
+
+        $booking->load(['user', 'showtime.film', 'showtime.studio', 'bookingDetails.seat']);
+
+        return view('user.bookings.ticket', compact('booking'));
     }
 }

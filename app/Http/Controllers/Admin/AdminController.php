@@ -57,7 +57,7 @@ class AdminController extends Controller
     }
     public function destroy(Admin $admin)
     {
-        // Admin tidak boleh menghapus akunnya sendiri (supaya tidak terkunci dari sistem)
+        // Admin ngga boleh hapus akunnya sendiri (supaya tidak terkunci dari sistem)
         if ($admin->id === auth('admin')->id()) {
             return redirect()->route('admin.data-admin.index')->with('error', 'Kamu tidak bisa menghapus akun yang sedang dipakai login.');
         }

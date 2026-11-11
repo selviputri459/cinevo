@@ -16,7 +16,12 @@ class Booking extends Model
         'showtime_id',
         'ticket_quantity',
         'total_price',
-        'status'
+        'status',
+        'payment_method',
+        'payment_channel',
+        'sender_account',
+        'payment_proof',
+        'refund_status',
     ];
 
     public function user()
@@ -51,5 +56,10 @@ class Booking extends Model
     public function getIsNewAttribute()
     {
         return is_null($this->seen_at);
+    }
+
+    public function isTransfer(): bool
+    {
+        return $this->payment_method === 'transfer';
     }
 }

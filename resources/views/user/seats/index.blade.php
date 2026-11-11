@@ -108,17 +108,16 @@
         text-transform: uppercase;
     }
 
-    /* DIUBAH: ukuran kursi & celah dijadikan variabel supaya lebar blok dihitung otomatis */
     .kursi-blocks {
         --seat-size: 34px;
         --seat-gap: 8px;
-        --per-block: 5; /* nilai asli diisi dari controller lewat atribut style di HTML */
+        --per-block: 5;
 
         display: flex;
         flex-direction: column;
         gap: 10px;
         max-width: 100%;
-        overflow-x: auto;   /* kalau layar sempit, denah bisa digeser, tidak kepotong */
+        overflow-x: auto;
         padding: 4px 0;
     }
 
@@ -137,13 +136,10 @@
         color: var(--cinevo-muted);
     }
 
-    /* DIUBAH: label baris yang blok kanannya kosong disembunyikan, tapi ruangnya tetap ada */
     .row-label--hidden {
         visibility: hidden;
     }
 
-    /* DIUBAH: lebar blok tetap = (jumlah kursi x ukuran) + (jumlah celah x gap).
-       Jadi blok kosong atau setengah terisi tetap selebar blok penuh. */
     .block {
         display: flex;
         gap: var(--seat-gap);
@@ -157,7 +153,6 @@
         flex-shrink: 0;
     }
 
-    /* DIUBAH: ukuran kursi mengikuti variabel --seat-size */
     .seat {
         width: var(--seat-size);
         height: var(--seat-size);
@@ -298,7 +293,6 @@
         cursor: not-allowed;
     }
 
-    /* DIUBAH: di HP cukup ganti variabel, lebar blok ikut menyesuaikan otomatis */
     @media (max-width: 720px) {
         .kursi-blocks {
             --seat-size: 28px;
@@ -357,7 +351,6 @@
 
             <div class="kursi-blocks" style="--per-block: {{ $seatsPerBlock }};">
                 @foreach($seatRows as $baris => $blocks)
-                    {{-- ambil blok kiri & kanan di awal, supaya bisa dicek kosong atau tidak --}}
                     @php
                         $leftBlock  = $blocks->get(0, collect());
                         $rightBlock = $blocks->get(1, collect());
@@ -393,8 +386,6 @@
                                 >{{ $seat->seat_name }}</button>
                             @endforeach
                         </div>
-
-                        {{-- DIUBAH: kalau blok kanan kosong, label disembunyikan --}}
                         <span class="row-label {{ $rightBlock->isEmpty() ? 'row-label--hidden' : '' }}">{{ $baris }}</span>
                     </div>
                 @endforeach

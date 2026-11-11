@@ -18,12 +18,12 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/riwayat-booking', [App\Http\Controllers\User\BookingController::class, 'index'])->name('booking.index');
     Route::post('/booking', [App\Http\Controllers\User\BookingController::class, 'store'])->name('booking.store');
     Route::get('/booking/{booking}', [App\Http\Controllers\User\BookingController::class, 'show'])->name('booking.show');
+    Route::get('/booking/{booking}/e-tiket', [App\Http\Controllers\User\BookingController::class, 'ticket'])->name('booking.ticket');
     Route::patch('/booking/{booking}/cancel', [App\Http\Controllers\User\BookingController::class, 'cancel'])->name('booking.cancel');
 });
 
 Route::get('/film/{film}', [App\Http\Controllers\User\FilmController::class, 'show'])->name('film.show');
 Route::get('/film/{film}/jadwal', [App\Http\Controllers\User\FilmController::class, 'jadwal'])->name('film.jadwal');
-
 Route::get('/showtime/{showtime}/seats', [App\Http\Controllers\User\SeatController::class, 'index'])->middleware('auth')->name('seats.index');
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -46,6 +46,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('booking', \App\Http\Controllers\Admin\BookingController::class)->only(['index', 'show']);
     Route::patch('booking/{booking}/lunas', [\App\Http\Controllers\Admin\BookingController::class, 'markAsLunas'])->name('booking.lunas');
     Route::patch('booking/{booking}/batalkan', [\App\Http\Controllers\Admin\BookingController::class, 'cancel'])->name('booking.cancel');
+    Route::patch('booking/{booking}/refund', [\App\Http\Controllers\Admin\BookingController::class, 'markAsRefunded'])->name('booking.refund');
+    Route::get('/dashboard/booking-chart', [\App\Http\Controllers\Admin\DashboardController::class, 'bookingChart'])->name('dashboard.booking-chart');
 });
  
 });

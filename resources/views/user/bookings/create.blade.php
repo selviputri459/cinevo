@@ -93,7 +93,8 @@
         margin-bottom: 16px;
     }
 
-    .booking-form input[readonly] {
+    .booking-form input[readonly],
+    .booking-form input[type="tel"] {
         width: 100%;
         padding: 9px 12px;
         border-radius: 8px;
@@ -101,6 +102,17 @@
         background: rgba(255, 255, 255, .06);
         color: var(--cinevo-text);
         outline: none;
+    }
+
+    .booking-form input.is-invalid {
+        border-color: #ff6b6b;
+    }
+
+    .booking-form .field-error {
+        display: block;
+        margin-top: 4px;
+        font-size: .78rem;
+        color: #ff6b6b;
     }
 
     .btn-booking {
@@ -157,7 +169,7 @@
             </dl>
         </div>
 
-        <form class="booking-form" action="{{ route('booking.store') }}" method="POST">
+        <form class="booking-form" action="{{ route('booking.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <h3>Data Pemesanan</h3>
 
@@ -172,8 +184,85 @@
             </div>
 
             <div class="field">
-                <label>No. Telepon</label>
-                <input type="text" value="{{ auth()->user()->phone }}" readonly>
+                <label for="phone">No. Telepon</label>
+
+                @if (auth()->user()->phone)
+                    <input type="text" id="phone" value="{{ auth()->user()->phone }}" readonly>
+                @else
+                    <input type="tel" id="phone" name="phone"
+                        value="{{ old('phone') }}"
+                        placeholder="08xxxxxxxxxx"
+                        inputmode="numeric" required
+                        class="@error('phone') is-invalid @enderror">
+
+                    @error('phone')
+                        <small class="field-error">{{ $message }}</small>
+                    @enderror
+                @endif
+            </div>
+
+             <div class="field">
+                <label>Metode Pembayaran</label>
+                <div class="pay-options">
+                    <label class="pay-option">
+                        <input type="radio" name="payment_method" value="cash"
+                            {{ old('payment_method', 'cash') === 'cash' ? 'checked' : '' }}>
+                        <span>Bayar di Kasir</span>
+                    </label>
+                    <label class="pay-option">
+                        <input type="radio" name="payment_method" value="transfer"
+                            {{ old('payment_method') === 'transfer' ? 'checked' : '' }}>
+                        <span>Transfer</span>
+                    </label>
+                </div>
+            </div>
+
+            <div id="transferSection" style="display:none;">
+                <div class="field">
+                    <label for="payment_channel">Transfer ke</label>
+                    <select id="payment_channel" name="payment_channel" class="form-input @error('payment_channel') is-invalid @enderror" required>
+                        <option value="">-- Pilih Bank / E-Wallet --</option>
+                        @foreach (config('payment.accounts') as $key => $acc)
+                            <option value="{{ $key }}"
+                                data-number="{{ $acc['number'] }}"
+                                data-name="{{ $acc['name'] }}"
+                                {{ old('payment_channel') === $key ? 'selected' : '' }}>
+                                {{ $acc['label'] }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('payment_channel')
+                        <small class="field-error">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="account-info" id="accountInfo" style="display:none;">
+                    <small>Transfer sejumlah</small>
+                    <div><strong>Rp{{ number_format($total, 0, ',', '.') }}</strong></div>
+                    <small>ke rekening</small>
+                    <div class="acc-number" id="accNumber"></div>
+                    <small>a.n. <span id="accName"></span></small>
+                </div>
+
+                <div class="field">
+                    <label for="sender_account">Rekening / No. DANA Pengirim</label>
+                    <input type="text" id="sender_account" name="sender_account" class="form-input @error('sender_account') is-invalid @enderror"
+                        value="{{ old('sender_account') }}"
+                        placeholder="Contoh: Mandiri 1234567890 a.n. Budi" required>
+                    <small style="color: var(--cinevo-muted); font-size:.75rem;">Dipakai untuk verifikasi dan tujuan refund jika booking dibatalkan.</small>
+                    @error('sender_account')
+                        <small class="field-error">{{ $message }}</small>
+                    @enderror
+                </div>
+
+                <div class="field">
+                    <label for="payment_proof">Bukti Transfer (JPG/PNG/JPEG, maks 2 MB)</label>
+                    <input type="file" id="payment_proof" name="payment_proof" accept="image/png,image/jpeg,image/jpg"
+                        class="form-input @error('payment_proof') is-invalid @enderror" required>
+                    @error('payment_proof')
+                        <small class="field-error">{{ $message }}</small>
+                    @enderror
+                </div>
             </div>
 
             <input type="hidden" name="showtime_id" value="{{ $showtime->id }}">
@@ -185,4 +274,38 @@
         </form>
     </div>
 </div>
+
+<script>
+    (function () {
+        const radios   = document.querySelectorAll('input[name="payment_method"]');
+        const section  = document.getElementById('transferSection');
+        const channel  = document.getElementById('payment_channel');
+        const info     = document.getElementById('accountInfo');
+        const accNum   = document.getElementById('accNumber');
+        const accName  = document.getElementById('accName');
+
+        function toggleTransfer() {
+            const isTransfer = document.querySelector('input[name="payment_method"]:checked').value === 'transfer';
+            section.style.display = isTransfer ? 'block' : 'none';
+            section.querySelectorAll('input, select').forEach(el => el.disabled = !isTransfer);
+        }
+
+        function showAccount() {
+            const opt = channel.options[channel.selectedIndex];
+            if (opt && opt.value) {
+                accNum.textContent  = opt.dataset.number;
+                accName.textContent = opt.dataset.name;
+                info.style.display  = 'block';
+            } else {
+                info.style.display = 'none';
+            }
+        }
+
+        radios.forEach(r => r.addEventListener('change', toggleTransfer));
+        channel.addEventListener('change', showAccount);
+
+        toggleTransfer();
+        showAccount();
+    })();
+</script>
 @endsection

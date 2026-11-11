@@ -72,7 +72,7 @@
 
 @push('scripts')
     <script>
-        // Munculkan konfirmasi SweetAlert, kalau "Ya" baru form hapus dikirim
+        // munculkan konfirmasi SweetAlert, kalau "Ya" baru form hapus dikirim
         function handleDestroy(url) {
             Swal.fire({
                 title: "Apa kamu yakin?",

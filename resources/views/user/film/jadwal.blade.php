@@ -5,7 +5,6 @@
 @section('content')
 <div class="container">
 
-    {{-- Info Film --}}
     <div class="card shadow-sm mb-4">
         <div class="card-body d-flex gap-3 align-items-center">
             <img src="{{ $film->poster ? asset('storage/'.$film->poster) : 'https://placehold.co/100x140?text=Poster' }}"
@@ -17,7 +16,6 @@
         </div>
     </div>
 
-    {{-- Tab Tanggal --}}
     <div class="d-flex gap-2 mb-4 flex-wrap">
         @foreach ($dates as $date)
             <a href="{{ route('film.jadwal', ['film' => $film->id, 'date' => $date]) }}"
@@ -29,7 +27,6 @@
         @endforeach
     </div>
 
-    {{-- Form pilih jam --}}
     <form action="" method="GET" id="pilihJadwalForm">
         @if ($showtimesByStudio->isEmpty())
             <p class="cinevo-muted">Tidak ada jadwal tayang di tanggal ini.</p>
@@ -78,8 +75,6 @@ document.getElementById('pilihJadwalForm').addEventListener('submit', function (
         return;
     }
 
-    // route() di-generate dari Laravel dengan ID dummy, terus di JS diganti
-    // pakai showtime_id yang dipilih user
     const urlTemplate = @json(route('seats.index', ['showtime' => 'SHOWTIME_ID']));
     window.location.href = urlTemplate.replace('SHOWTIME_ID', checked.value);
 });

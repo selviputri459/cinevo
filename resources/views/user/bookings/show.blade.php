@@ -12,7 +12,6 @@
         font-family: 'Inter', sans-serif;
     }
 
-    /* ===== Judul di tengah ===== */
     .detail-header{
         text-align: center;
         margin-bottom: 28px;
@@ -32,7 +31,6 @@
         color: #F2A6C6;
     }
 
-    /* ===== Kartu: 2 kolom (poster | detail) ===== */
     .detail-card{
         background: #4F1236;
         border: 1px solid rgba(255,255,255,.12);
@@ -53,7 +51,6 @@
         box-shadow: 0 10px 28px rgba(0,0,0,.35);
     }
 
-    /* ===== Info detail: grid 2 kolom ===== */
     .detail-info{
         display: flex;
         flex-direction: column;
@@ -92,7 +89,6 @@
         color: #F2A6C6;
     }
 
-    /* ===== Status ===== */
     .status-pill{
         display: inline-block;
         padding: 3px 12px;
@@ -104,7 +100,6 @@
     .status-pill.lunas{ background: rgba(120,220,150,.18); color:#7EDD9C; }
     .status-pill.batal{ background: rgba(255,255,255,.12); color:#D79BB8; }
 
-    /* ===== Tombol batalkan ===== */
     .detail-actions{
         margin-top: auto;
         padding-top: 24px;
@@ -123,7 +118,6 @@
     }
     .btn-batalkan:hover{ opacity:.9; }
 
-    /* ===== Notifikasi ===== */
     .alert-box{
         max-width: 900px;
         margin: 0 auto 16px;
@@ -134,7 +128,6 @@
     .alert-success{ background: rgba(120,220,150,.18); color:#B7F0C7; }
     .alert-error{ background: rgba(255,120,120,.18); color:#FFC2C2; }
 
-    /* ===== Responsif ===== */
     @media (max-width: 768px){
         .detail-card{
             grid-template-columns: 1fr;
@@ -150,6 +143,37 @@
     }
     @media (max-width: 480px){
         .detail-grid{ grid-template-columns: 1fr; }
+    }
+
+        .proof-thumb{
+        max-width: 140px;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,.2);
+        display: block;
+        margin-top: 6px;
+    }
+    .detail-note{
+        margin-top: 18px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: .88rem;
+        background: rgba(255,255,255,.08);
+        color: #FBEFF4;
+    }
+    .detail-page a.btn-ticket{
+    display: inline-block;
+    min-width: 220px;
+    padding: 12px 20px;
+    border-radius: 9px;
+    background: #F2A6C6;
+    color: #3B0A28 !important;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    }
+    .detail-page a.btn-ticket:hover{
+        opacity: .9;
+        color: #3B0A28 !important;
     }
 </style>
 @endpush
@@ -169,13 +193,10 @@
     @endif
 
     <div class="detail-card">
-        {{-- Kolom kiri: poster --}}
         <div class="detail-poster">
             <img src="{{ $booking->showtime->film->poster ? asset('storage/'.$booking->showtime->film->poster) : 'https://placehold.co/240x360?text=Poster' }}"
                 alt="{{ $booking->showtime->film->title }}">
         </div>
-
-        {{-- Kolom kanan: detail --}}
         <div class="detail-info">
             <h2 class="detail-film-title">{{ $booking->showtime->film->title }}</h2>
 
@@ -217,6 +238,22 @@
                     </dd>
                 </div>
 
+                <div>
+                    <dt>Pembayaran</dt>
+                    <dd>{{ $booking->isTransfer() ? 'Transfer ('.$booking->payment_channel.')' : 'Bayar di Kasir' }}</dd>
+                </div>
+
+                @if ($booking->isTransfer() && $booking->payment_proof)
+                    <div>
+                        <dt>Bukti Transfer</dt>
+                        <dd>
+                            <a href="{{ asset('storage/'.$booking->payment_proof) }}" target="_blank">
+                                <img src="{{ asset('storage/'.$booking->payment_proof) }}" alt="Bukti transfer" class="proof-thumb">
+                            </a>
+                        </dd>
+                    </div>
+                @endif
+
                 <div class="full detail-total">
                     <dt>Total Pembayaran</dt>
                     <dd>Rp{{ number_format($booking->total_price, 0, ',', '.') }}</dd>
@@ -231,6 +268,33 @@
                         @method('PATCH')
                         <button type="submit" class="btn-batalkan">Batalkan Booking</button>
                     </form>
+                </div>
+            @endif
+
+            @if ($booking->status === 'Menunggu Verifikasi')
+                <div class="detail-note">
+                    Bukti transfer kamu sedang diverifikasi admin. E-tiket akan tersedia setelah pembayaran dinyatakan lunas.
+                </div>
+            @endif
+
+            @if ($booking->isTransfer() && $booking->status === 'Lunas')
+                <div class="detail-actions">
+                    <a href="{{ route('booking.ticket', $booking) }}" class="btn-ticket">Lihat E-Tiket</a>
+                </div>
+                <div class="detail-note">
+                    Booking transfer tidak bisa dibatalkan sendiri. Hubungi admin lewat WhatsApp jika ada kendala.
+                </div>
+            @endif
+
+            @if ($booking->refund_status === 'Menunggu Refund')
+                <div class="detail-note">
+                    Booking dibatalkan. Uang kamu (Rp{{ number_format($booking->total_price, 0, ',', '.') }}) akan dikembalikan ke
+                    {{ $booking->payment_channel }} {{ $booking->sender_account }}.
+                </div>
+            @elseif ($booking->refund_status === 'Sudah Direfund')
+                <div class="detail-note">
+                    Refund Rp{{ number_format($booking->total_price, 0, ',', '.') }} sudah dikirim ke
+                    {{ $booking->payment_channel }} {{ $booking->sender_account }}.
                 </div>
             @endif
         </div>

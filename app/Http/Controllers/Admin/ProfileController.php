@@ -20,9 +20,7 @@ class ProfileController extends Controller
         $admin = auth('admin')->user();
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            // unique tapi abaikan email milik admin ini sendiri
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('admins', 'email')->ignore($admin->id)],
-            // password boleh kosong (kalau kosong = tidak diganti)
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'profile_photo' => ['nullable', 'image', 'mimes:jpeg,jpg,png', 'max:2048'],
         ], [
@@ -49,7 +47,6 @@ class ProfileController extends Controller
             $admin->password = $validated['password'];
         }
         if ($request->hasFile('profile_photo')) {
-            // hapus foto lama supaya storage tidak menumpuk
             if ($admin->profile_photo) {
                 Storage::disk('public')->delete($admin->profile_photo);
             }

@@ -74,9 +74,15 @@
                     {{ $film->synopsis }}
                 </p>
 
-                <a href="{{  route('film.jadwal', $film)  }}" class="btn cinevo-btn-primary">
-                    Pilih Jadwal Tayang
-                </a>
+                @if($film->showtimes()->exists())
+                    <a href="{{  route('film.jadwal', $film)  }}" class="btn cinevo-btn-primary">
+                        Pilih Jadwal Tayang
+                    </a>
+                @else
+                    <button type="button" class="btn btn-secondary" disabled>
+                        Segera Tayang
+                    </button>
+                @endif
             </div>
         </div>
     </div>

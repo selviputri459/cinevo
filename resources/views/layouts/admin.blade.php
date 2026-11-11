@@ -27,21 +27,14 @@
         @include('layouts.inc.sidebar')
 
         <div id="content-wrapper" class="d-flex flex-column">
-
             <div id="content">
-
                 @include('layouts.inc.navbar')
-
                 <div class="container-fluid">
                     @yield('content')
                 </div>
-
             </div>
-
             @include('layouts.inc.footer')
-
         </div>
-
     </div>
 
     <a class="scroll-to-top rounded" href="#page-top">

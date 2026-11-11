@@ -76,7 +76,6 @@ class StudioController extends Controller
             'capacity' => 'Jumlah Kursi',
         ]);
 
-        // cek: kursi yang akan dihapus (kalau kapasitas dikurangi) jangan sampai sudah pernah dibooking
         $newNames = Studio::seatNamesFor((int) $validated['capacity']);
         $seatIdsToRemove = $studio->seats()->whereNotIn('seat_name', $newNames)->pluck('id');
 
@@ -98,6 +97,6 @@ class StudioController extends Controller
     public function destroy(Studio $studio)
     {
         $studio->delete();
-        return redirect()->route('admin.studio.index');
+        return redirect()->route('admin.studio.index')->with('success', 'Studio berhasil dihapus.');
     }
 }

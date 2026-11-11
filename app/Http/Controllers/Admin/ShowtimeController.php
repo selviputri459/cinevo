@@ -60,14 +60,11 @@ class ShowtimeController extends Controller
 
         // Urutan: aktif = terdekat dulu (ASC), riwayat = paling baru lewat dulu (DESC)
         $direction = $tab === 'riwayat' ? 'DESC' : 'ASC';
-        $showtimes = $query->orderByRaw("TIMESTAMP(`date`, `time`) {$direction}")
-            ->paginate(10)
-            ->withQueryString();
+        $showtimes = $query->orderByRaw("TIMESTAMP(`date`, `time`) {$direction}")->paginate(10)->withQueryString();
 
         $films   = Film::orderBy('title')->get();
         $studios = Studio::orderBy('name')->get();
 
-        // Jumlah untuk badge di tab
         $totalAktif   = Showtime::upcoming()->count();
         $totalRiwayat = Showtime::past()->count();
 

@@ -14,9 +14,7 @@ class FilmController extends Controller
         $today = Carbon::today()->toDateString();
 
         $film->load(['showtimes' => function ($query) use ($today) {
-            $query->where('date', '>=', $today)
-                ->orderBy('date')
-                ->orderBy('time');
+            $query->where('date', '>=', $today)->orderBy('date')->orderBy('time');
         }, 'showtimes.studio']);
 
         return view('user.film.show', compact('film'));
